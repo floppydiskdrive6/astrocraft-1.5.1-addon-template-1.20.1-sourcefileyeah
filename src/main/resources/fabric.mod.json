@@ -19,7 +19,7 @@
 			"net.witherstorm8475.astrocraftaddon.AstroCraft151Addon"
 		],
 		"client": [
-			"net.witherstorm8475.astrocraftaddon.MostRealisticSkiesRenderer"
+			"net.witherstorm8475.astrocraftaddon.AstrocraftAddonClient"
 		],
 		"fabric-datagen": [
 			"net.witherstorm8475.astrocraftaddon.AstroCraft151AddonDataGenerator"
