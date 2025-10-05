@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "astrocraft-151-addon",
+	"version": "${version}",
+	"name": "AstroCraft-1.5.1-Addon",
+	"description": "This is an Addon for astrocraft-1.5.1-1.20.1, The file name is astrocraftaddon151 but the mod name is going to be Most Realistic Skies: Astrocraft addon",
+	"authors": [
+		"Clater/Witherstorm8475!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/astrocraft-151-addon/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.witherstorm8475.astrocraftaddon.AstroCraft151Addon"
+		],
+		"client": [
+			"net.witherstorm8475.astrocraftaddon.MostRealisticSkiesRenderer"
+		],
+		"fabric-datagen": [
+			"net.witherstorm8475.astrocraftaddon.AstroCraft151AddonDataGenerator"
+		]
+	},
+	"mixins": [
+		"astrocraft-151-addon.mixins.json",
+		{
+			"config": "astrocraft-151-addon.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
