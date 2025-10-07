@@ -1,7 +1,6 @@
-package net.witherstorm8475.astrocraftaddon.mixin;
+package net.witherstorm8475.astrocraftaddon.mixin.client;
 
 import mod.lwhrvw.astrocraft.planets.position.Orbit;
-import net.witherstorm8475.astrocraftaddon.position.PreccesingOrbit;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -41,7 +40,6 @@ public class OrbitMixin {
     @Inject(method = "getLongAscending", at = @At("HEAD"), cancellable = true, remap = false)
     private void modifyLongAscending(double time, CallbackInfoReturnable<Double> cir) {
         if (astrocraftAddon$precessionApplied && astrocraftAddon$nodalPrecPeriod != 0.0) {
-            System.out.println("NODAL PRECESSION: time=" + time + ", period=" + astrocraftAddon$nodalPrecPeriod);
             double result = longAscendingAE - 360.0 * time / astrocraftAddon$nodalPrecPeriod;
             cir.setReturnValue(result);
         }
@@ -50,7 +48,6 @@ public class OrbitMixin {
     @Inject(method = "getArgPeriapsis", at = @At("HEAD"), cancellable = true, remap = false)
     private void modifyArgPeriapsis(double time, CallbackInfoReturnable<Double> cir) {
         if (astrocraftAddon$precessionApplied) {
-            System.out.println("APSIDAL PRECESSION CALLED: time=" + time + ", period=" + astrocraftAddon$apsidalPrecPeriod);
             double longAsc = astrocraftAddon$nodalPrecPeriod == 0.0
                     ? longAscendingAE
                     : longAscendingAE - 360.0 * time / astrocraftAddon$nodalPrecPeriod;
@@ -59,7 +56,6 @@ public class OrbitMixin {
                 cir.setReturnValue(longPeriapsisAE - longAsc);
             } else {
                 double result = longPeriapsisAE - longAsc + 360.0 * time / astrocraftAddon$apsidalPrecPeriod;
-                System.out.println("APSIDAL RESULT: " + result);
                 cir.setReturnValue(result);
             }
         }
@@ -84,6 +80,7 @@ public class OrbitMixin {
         }
     }
 
+    // ✅ Option 1: public @Unique method so reflection can see it
     @Unique
     public void astrocraftAddon$setPrecession(double nodalPeriod, double apsidalPeriod) {
         this.astrocraftAddon$nodalPrecPeriod = nodalPeriod;
