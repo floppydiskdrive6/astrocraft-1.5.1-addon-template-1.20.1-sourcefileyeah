@@ -25,13 +25,9 @@
 			"net.witherstorm8475.astrocraftaddon.AstroCraft151AddonDataGenerator"
 		]
 	},
-	"mixins": [
-		"astrocraft-151-addon.mixins.json",
-		{
-			"config": "astrocraft-151-addon.client.mixins.json",
-			"environment": "client"
-		}
-	],
+  "mixins": [
+    "astrocraft-151-addon.client.mixins.json"
+  ],
 	"depends": {
 		"fabricloader": ">=0.17.2",
 		"minecraft": "~1.20.1",
