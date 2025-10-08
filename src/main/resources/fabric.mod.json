@@ -26,7 +26,7 @@
 		]
 	},
   "mixins": [
-    "astrocraft-151-addon.client.mixins.json"
+    "astrocraft-151-addon.mixins.json"
   ],
 	"depends": {
 		"fabricloader": ">=0.17.2",
