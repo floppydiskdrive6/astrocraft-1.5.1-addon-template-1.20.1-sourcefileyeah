@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.witherstorm8475.astrocraftaddon.mixin",
+  "package": "net.witherstorm8475.astrocraftaddon.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "main": [
     "OrbitMixin"
