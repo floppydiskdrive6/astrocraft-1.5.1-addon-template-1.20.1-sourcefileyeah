@@ -4,17 +4,17 @@
       "name": "Mercury",
       "nodal": 325513,
       "apsidal": 280000,
-      "axialPrecessionPeriod": 0,
-      "minAxialTilt": 0.034,
+      "axialPrecessionPeriod": 325000,
+      "minAxialTilt": 0.01,
       "maxAxialTilt": 0.034
     },
     {
       "name": "Venus",
       "nodal": 29000,
       "apsidal": 29000,
-      "axialPrecessionPeriod": 0,
-      "minAxialTilt": 177.36,
-      "maxAxialTilt": 177.36
+      "axialPrecessionPeriod": 29000,
+      "minAxialTilt": 177.3,
+      "maxAxialTilt": 177.4
     },
     {
       "name": "Earth",
@@ -63,6 +63,14 @@
       "axialPrecessionPeriod": 0,
       "minAxialTilt": 28.32,
       "maxAxialTilt": 28.32
+    },
+    {
+      "name": "Pluto",
+      "nodal": 20000,
+      "apsidal": 19951,
+      "axialPrecessionPeriod": 3000000,
+      "minAxialTilt": 102,
+      "maxAxialTilt": 126
     },
     {
       "name": "Moon",
