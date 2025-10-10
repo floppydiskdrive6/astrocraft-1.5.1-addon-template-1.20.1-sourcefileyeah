@@ -6,7 +6,6 @@ import mod.lwhrvw.astrocraft.planets.Body;
 import mod.lwhrvw.astrocraft.planets.ModelManager;
 import mod.lwhrvw.astrocraft.planets.Planet;
 import mod.lwhrvw.astrocraft.utils.RenderUtils;
-import net.minecraft.client.MinecraftClient;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -48,12 +47,6 @@ public class PlanetBelowRendererMixin {
                 return;
             }
 
-            // Get Minecraft client and ensure player is present
-            MinecraftClient client = MinecraftClient.getInstance();
-            if (client.player == null) {
-                return;
-            }
-
             // Render the planet texture as a large plane below
             renderPlanetTexturePlane(model);
 
@@ -63,18 +56,20 @@ public class PlanetBelowRendererMixin {
     }
 
     private static void renderPlanetTexturePlane(ModelManager.Model model) {
-        // Enable blending and depth test
+        // Disable depth test entirely - we want this to render behind everything
+        RenderSystem.disableDepthTest();
+        RenderSystem.depthMask(false);
+
+        // Enable blending
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.enableDepthTest();
-        RenderSystem.depthMask(false); // Don't write to depth buffer
 
         // Bind the planet's texture
         model.useTexture();
 
         // Set shader
         RenderSystem.setShader(RenderUtils.getPositionTexProgram());
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.8F); // Slightly transparent
 
         // Create identity matrix (render in world space below everything)
         Matrix4f matrix = new Matrix4f();
@@ -89,6 +84,7 @@ public class PlanetBelowRendererMixin {
         new RenderUtils.BufferHelper(1.0F).texture().draw(matrix);
 
         // Restore render state
+        RenderSystem.enableDepthTest();
         RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
     }

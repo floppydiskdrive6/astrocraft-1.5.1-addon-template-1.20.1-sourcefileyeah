@@ -4,17 +4,19 @@
       "name": "Mercury",
       "nodal": 325513,
       "apsidal": 280000,
-      "axialPrecessionPeriod": 325000,
-      "minAxialTilt": 0.01,
-      "maxAxialTilt": 0.034
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.034,
+      "maxAxialTilt": 0.034,
+      "SynodicDay": 176
     },
     {
       "name": "Venus",
       "nodal": 29000,
       "apsidal": 29000,
-      "axialPrecessionPeriod": 29000,
-      "minAxialTilt": 177.3,
-      "maxAxialTilt": 177.4
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 177.36,
+      "maxAxialTilt": 177.36,
+      "SynodicDay": 116.75
     },
     {
       "name": "Earth",
@@ -22,7 +24,8 @@
       "apsidal": 112000,
       "axialPrecessionPeriod": 25772,
       "minAxialTilt": 22.1,
-      "maxAxialTilt": 24.5
+      "maxAxialTilt": 24.5,
+      "SynodicDay": 1.0
     },
     {
       "name": "Mars",
@@ -30,7 +33,8 @@
       "apsidal": 7300,
       "axialPrecessionPeriod": 170000,
       "minAxialTilt": 22.04,
-      "maxAxialTilt": 26.14
+      "maxAxialTilt": 26.14,
+      "SynodicDay": 1.0275
     },
     {
       "name": "Jupiter",
@@ -38,7 +42,8 @@
       "apsidal": 200000,
       "axialPrecessionPeriod": 0,
       "minAxialTilt": 3.13,
-      "maxAxialTilt": 3.13
+      "maxAxialTilt": 3.13,
+      "SynodicDay": 0.41354
     },
     {
       "name": "Saturn",
@@ -46,7 +51,8 @@
       "apsidal": 1400000,
       "axialPrecessionPeriod": 0,
       "minAxialTilt": 26.73,
-      "maxAxialTilt": 26.73
+      "maxAxialTilt": 26.73,
+      "SynodicDay": 0.44401
     },
     {
       "name": "Uranus",
@@ -54,7 +60,8 @@
       "apsidal": 0,
       "axialPrecessionPeriod": 0,
       "minAxialTilt": 97.77,
-      "maxAxialTilt": 97.77
+      "maxAxialTilt": 97.77,
+      "SynodicDay": 0.71833
     },
     {
       "name": "Neptune",
@@ -62,7 +69,8 @@
       "apsidal": 0,
       "axialPrecessionPeriod": 0,
       "minAxialTilt": 28.32,
-      "maxAxialTilt": 28.32
+      "maxAxialTilt": 28.32,
+      "SynodicDay": 0.67125
     },
     {
       "name": "Pluto",
@@ -70,13 +78,15 @@
       "apsidal": 19951,
       "axialPrecessionPeriod": 3000000,
       "minAxialTilt": 102,
-      "maxAxialTilt": 126
+      "maxAxialTilt": 126,
+      "SynodicDay": 6.4
     },
     {
       "name": "Moon",
       "axialPrecessionPeriod": 18.6,
       "minAxialTilt": 1.54,
-      "maxAxialTilt": 1.54
+      "maxAxialTilt": 1.54,
+      "SynodicDay": 29.53059
     }
   ]
 }
