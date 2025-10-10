@@ -103,15 +103,15 @@ public class PreccesingOrbit {
                 StringBuilder json = new StringBuilder();
                 json.append("{\n");
                 json.append("  \"planets\": [\n");
-                json.append("    {\"name\": \"Mercury\", \"nodal\": 325513, \"apsidal\": 280000, \"minAxialTilt\": 0.01, \"maxAxialTilt\": 0.034, \"axialPrecessionPeriod\": 325000, \"siderealDay\": 325000},\n");
-                json.append("    {\"name\": \"Venus\", \"nodal\": 29000, \"apsidal\": 29000, \"minAxialTilt\": 177.3, \"maxAxialTilt\": 177.4, \"axialPrecessionPeriod\": 29000, \"siderealDay\": 325000},\n");
-                json.append("    {\"name\": \"Earth\", \"nodal\": 25772, \"apsidal\": 112000, \"minAxialTilt\": 22.1, \"maxAxialTilt\": 24.5, \"axialPrecessionPeriod\": 25772, \"siderealDay\": 1},\n");
-                json.append("    {\"name\": \"Mars\", \"nodal\": 170000, \"apsidal\": 7300, \"minAxialTilt\": 22.04, \"maxAxialTilt\": 26.14, \"axialPrecessionPeriod\": 170000, \"siderealDay\": 1.0275},\n");
+                json.append("    {\"name\": \"Mercury\", \"nodal\": 325513, \"apsidal\": 280000, \"minAxialTilt\": 0.01, \"maxAxialTilt\": 0.034, \"axialPrecessionPeriod\": 325000, \"siderealDay\": 58.646},\n");
+                json.append("    {\"name\": \"Venus\", \"nodal\": 29000, \"apsidal\": 29000, \"minAxialTilt\": 177.3, \"maxAxialTilt\": 177.4, \"axialPrecessionPeriod\": 29000, \"siderealDay\": -243.025},\n");
+                json.append("    {\"name\": \"Earth\", \"nodal\": 25772, \"apsidal\": 112000, \"minAxialTilt\": 22.1, \"maxAxialTilt\": 24.5, \"axialPrecessionPeriod\": 25772, \"siderealDay\": 0.99726968},\n");
+                json.append("    {\"name\": \"Mars\", \"nodal\": 170000, \"apsidal\": 7300, \"minAxialTilt\": 22.04, \"maxAxialTilt\": 26.14, \"axialPrecessionPeriod\": 170000, \"siderealDay\": 1.025957},\n");
                 json.append("    {\"name\": \"Jupiter\", \"nodal\": 50687, \"apsidal\": 200000, \"minAxialTilt\": 3.13, \"maxAxialTilt\": 3.13, \"axialPrecessionPeriod\": 0, \"siderealDay\": 0.41354},\n");
                 json.append("    {\"name\": \"Saturn\", \"nodal\": 50687, \"apsidal\": 1400000, \"minAxialTilt\": 26.73, \"maxAxialTilt\": 26.73, \"axialPrecessionPeriod\": 0, \"siderealDay\": 0.44401},\n");
-                json.append("    {\"name\": \"Uranus\", \"nodal\": 0, \"apsidal\": 0, \"minAxialTilt\": 97.77, \"maxAxialTilt\": 97.77, \"axialPrecessionPeriod\": 0, \"siderealDay\": 0.71833},\n");
+                json.append("    {\"name\": \"Uranus\", \"nodal\": 0, \"apsidal\": 0, \"minAxialTilt\": 97.77, \"maxAxialTilt\": 97.77, \"axialPrecessionPeriod\": 0, \"siderealDay\": -0.71833},\n");
                 json.append("    {\"name\": \"Neptune\", \"nodal\": 0, \"apsidal\": 0, \"minAxialTilt\": 28.32, \"maxAxialTilt\": 28.32, \"axialPrecessionPeriod\": 0, \"siderealDay\": 0.67125},\n");
-                json.append("    {\"name\": \"Pluto\", \"nodal\": 20000, \"apsidal\": 19951, \"minAxialTilt\": 102, \"maxAxialTilt\": 126, \"axialPrecessionPeriod\": 3000000, \"siderealDay\": 6.4}\n");
+                json.append("    {\"name\": \"Pluto\", \"nodal\": 20000, \"apsidal\": 19951, \"minAxialTilt\": 102, \"maxAxialTilt\": 126, \"axialPrecessionPeriod\": 3000000, \"siderealDay\": 6.387}\n");
                 json.append("  ],\n");  // close planets array
                 json.append("  \"moons\": [\n");
                 json.append("    {\"name\": \"Moon\", \"minAxialTilt\": 1.54, \"maxAxialTilt\": 1.54, \"axialPrecessionPeriod\": 0, \"synodicDay\": 29.53059}\n");
