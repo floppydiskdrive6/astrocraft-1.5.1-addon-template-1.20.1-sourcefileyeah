@@ -114,7 +114,7 @@ public class PreccesingOrbit {
                 json.append("    {\"name\": \"Pluto\", \"nodal\": 20000, \"apsidal\": 19951, \"minAxialTilt\": 102, \"maxAxialTilt\": 126, \"axialPrecessionPeriod\": 3000000, \"siderealDay\": 6.387}\n");
                 json.append("  ],\n");  // close planets array
                 json.append("  \"moons\": [\n");
-                json.append("    {\"name\": \"Moon\", \"minAxialTilt\": 1.54, \"maxAxialTilt\": 1.54, \"axialPrecessionPeriod\": 0, \"synodicDay\": 29.53059}\n");
+                json.append("    {\"name\": \"Moon\", \"minAxialTilt\": 1.54, \"maxAxialTilt\": 1.54, \"axialPrecessionPeriod\": 0, \"siderealDay\": 27.3216625}\n");
                 json.append("  ]\n");  // close moons array
                 json.append("}\n");   // close JSON object
 
@@ -148,7 +148,6 @@ public class PreccesingOrbit {
                 double axialPrecessionPeriod = 0;
                 double minAxialTilt = 0;
                 double maxAxialTilt = 0;
-                double synodicDay = 0;
                 double siderealDay = 0;
                 String[] pairs = obj.split(",");
                 for (String pair : pairs) {
@@ -168,14 +167,12 @@ public class PreccesingOrbit {
                         minAxialTilt = Double.parseDouble(value);
                     } else if (key.equals("maxAxialTilt")) {
                         maxAxialTilt = Double.parseDouble(value);
-                    } else if (key.equals("synodicDay")) {
-                        synodicDay = Double.parseDouble(value);
                     } else if (key.equals("siderealDay")) {
                         siderealDay = Double.parseDouble(value);
                     }
                 }
                 if (name != null) {
-                    PRECESSION_MAP.put(name.toLowerCase(), new PrecessionData(nodal, apsidal, minAxialTilt, maxAxialTilt, axialPrecessionPeriod, synodicDay, siderealDay));
+                    PRECESSION_MAP.put(name.toLowerCase(), new PrecessionData(nodal, apsidal, minAxialTilt, maxAxialTilt, axialPrecessionPeriod, siderealDay));
                 }
             }
         }
@@ -184,7 +181,7 @@ public class PreccesingOrbit {
             if (PRECESSION_MAP == null) {
                 load();
             }
-            return PRECESSION_MAP.getOrDefault(planetName.toLowerCase(), new PrecessionData(0, 0, 0, 0, 0, 0, 0));
+            return PRECESSION_MAP.getOrDefault(planetName.toLowerCase(), new PrecessionData(0, 0, 0, 0, 0, 0));
         }
 
         public static class PrecessionData {
@@ -193,16 +190,14 @@ public class PreccesingOrbit {
             public final double minAxialTilt;
             public final double maxAxialTilt;
             public final double axialPrecessionPeriod;
-            public final double synodicDay;
             public final double siderealDay;
 
-            public PrecessionData(double nodal, double apsidal, double minAxialTilt, double maxAxialTilt, double axialPrecessionPeriod, double synodicDay, double siderealDay) {
+            public PrecessionData(double nodal, double apsidal, double minAxialTilt, double maxAxialTilt, double axialPrecessionPeriod, double siderealDay) {
                 this.nodalPeriod = nodal;
                 this.apsidalPeriod = apsidal;
                 this.minAxialTilt = minAxialTilt;
                 this.maxAxialTilt = maxAxialTilt;
                 this.axialPrecessionPeriod = axialPrecessionPeriod;
-                this.synodicDay = synodicDay;
                 this.siderealDay = siderealDay;
             }
         }

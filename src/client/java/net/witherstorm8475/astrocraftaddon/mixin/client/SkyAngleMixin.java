@@ -42,23 +42,8 @@ public class SkyAngleMixin {
             PreccesingOrbit.PrecessionConfig.PrecessionData precData =
                     PreccesingOrbit.PrecessionConfig.getPrecession(bodyName);
 
-            // Determine rotation period
-            double rotationPeriod;
-            if (precData.siderealDay != 0) {
-                // Planets use sidereal day directly
-                rotationPeriod = precData.siderealDay;
-            } else if (precData.synodicDay != 0) {
-                // Moons: convert synodic to sidereal using parent planet's year
-                // sidereal = (synodic × parentYear) / (synodic + parentYear)
-                double parentYear = getParentOrbitalPeriod(obsBody);
-                if (parentYear > 0) {
-                    rotationPeriod = (precData.synodicDay * parentYear) / (precData.synodicDay + parentYear);
-                } else {
-                    rotationPeriod = precData.synodicDay; // Fallback
-                }
-            } else {
-                rotationPeriod = 1.0; // Default
-            }
+            // Determine rotation period - use sidereal for both planets and moons
+            double rotationPeriod = precData.siderealDay != 0 ? precData.siderealDay : 1.0;
 
             // If rotation period is 1.0 (default), let original method handle it
             if (Math.abs(rotationPeriod - 1.0) < 0.0001) {
@@ -109,46 +94,6 @@ public class SkyAngleMixin {
 
         } catch (Exception e) {
             // If anything fails, let original method handle it
-        }
-    }
-
-    private static double getParentOrbitalPeriod(Body moon) {
-        try {
-            // Get parent body
-            Body parent = moon.getParent();
-            if (parent == null) return 365.25; // Default to Earth year
-
-            // Get parent's positioner
-            Field positionerField = Body.class.getDeclaredField("positioner");
-            positionerField.setAccessible(true);
-            Object positioner = positionerField.get(parent);
-
-            if (positioner == null) return 365.25;
-
-            // Get orbital period from parent's orbit
-            Class<?> orbitClass = positioner.getClass();
-            if (orbitClass.getSimpleName().equals("Orbit") ||
-                    orbitClass.getSuperclass().getSimpleName().equals("Orbit")) {
-
-                Field periodField = null;
-                Class<?> searchClass = orbitClass;
-                while (searchClass != null && periodField == null) {
-                    try {
-                        periodField = searchClass.getDeclaredField("period");
-                        periodField.setAccessible(true);
-                    } catch (NoSuchFieldException e) {
-                        searchClass = searchClass.getSuperclass();
-                    }
-                }
-
-                if (periodField != null) {
-                    return periodField.getDouble(positioner);
-                }
-            }
-
-            return 365.25; // Default
-        } catch (Exception e) {
-            return 365.25; // Default to Earth year
         }
     }
 }
