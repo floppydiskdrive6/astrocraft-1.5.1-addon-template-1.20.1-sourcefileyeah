@@ -42,11 +42,14 @@ public class SkyAngleMixin {
             PreccesingOrbit.PrecessionConfig.PrecessionData precData =
                     PreccesingOrbit.PrecessionConfig.getPrecession(bodyName);
 
-            // Determine rotation period - use sidereal for both planets and moons
-            double rotationPeriod = precData.siderealDay != 0 ? precData.siderealDay : 1.0;
+            // Determine rotation period
+            double rotationPeriod = precData.siderealDay;
 
-            // If rotation period is 1.0 (default), let original method handle it
-            if (Math.abs(rotationPeriod - 1.0) < 0.0001) {
+            // If rotation period is 0, freeze the sky
+            if (rotationPeriod == 0.0) {
+                double skyAngle = PlanetManager.getTropicalAngle();
+                double longitude = SkyRenderer.getLongitude();
+                cir.setReturnValue(skyAngle + longitude);
                 return;
             }
 

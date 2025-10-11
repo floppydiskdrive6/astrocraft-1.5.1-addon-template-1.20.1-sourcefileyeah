@@ -91,7 +91,7 @@ public class PreccesingOrbit {
                 }
                 reader.close();
                 parseJson(jsonContent.toString());
-                System.out.println("Loaded precession data for " + PRECESSION_MAP.size() + " planets");
+                //System.out.println("Loaded precession data for " + PRECESSION_MAP.size() + " planets");
             } catch (Exception e) {
                 System.err.println("Error loading precession.json:");
                 e.printStackTrace();
@@ -103,10 +103,10 @@ public class PreccesingOrbit {
                 StringBuilder json = new StringBuilder();
                 json.append("{\n");
                 json.append("  \"planets\": [\n");
-                json.append("    {\"name\": \"Mercury\", \"nodal\": 325513, \"apsidal\": 280000, \"minAxialTilt\": 0.01, \"maxAxialTilt\": 0.034, \"axialPrecessionPeriod\": 325000, \"siderealDay\": 58.646},\n");
-                json.append("    {\"name\": \"Venus\", \"nodal\": 29000, \"apsidal\": 29000, \"minAxialTilt\": 177.3, \"maxAxialTilt\": 177.4, \"axialPrecessionPeriod\": 29000, \"siderealDay\": -243.025},\n");
-                json.append("    {\"name\": \"Earth\", \"nodal\": 25772, \"apsidal\": 112000, \"minAxialTilt\": 22.1, \"maxAxialTilt\": 24.5, \"axialPrecessionPeriod\": 25772, \"siderealDay\": 0.99726968},\n");
-                json.append("    {\"name\": \"Mars\", \"nodal\": 170000, \"apsidal\": 7300, \"minAxialTilt\": 22.04, \"maxAxialTilt\": 26.14, \"axialPrecessionPeriod\": 170000, \"siderealDay\": 1.025957},\n");
+                json.append("    {\"name\": \"Mercury\", \"nodal\": 325513, \"apsidal\": 280000, \"minAxialTilt\": 0.01, \"maxAxialTilt\": 0.034, \"axialPrecessionPeriod\": 325000, \"siderealDay\": 176},\n");
+                json.append("    {\"name\": \"Venus\", \"nodal\": 29000, \"apsidal\": 29000, \"minAxialTilt\": 177.3, \"maxAxialTilt\": 177.4, \"axialPrecessionPeriod\": 29000, \"siderealDay\": -116},\n");
+                json.append("    {\"name\": \"Earth\", \"nodal\": 25772, \"apsidal\": 112000, \"minAxialTilt\": 22.1, \"maxAxialTilt\": 24.5, \"axialPrecessionPeriod\": 25772, \"siderealDay\": 1},\n");
+                json.append("    {\"name\": \"Mars\", \"nodal\": 170000, \"apsidal\": 7300, \"minAxialTilt\": 22.04, \"maxAxialTilt\": 26.14, \"axialPrecessionPeriod\": 170000, \"siderealDay\": 1.027},\n");
                 json.append("    {\"name\": \"Jupiter\", \"nodal\": 50687, \"apsidal\": 200000, \"minAxialTilt\": 3.13, \"maxAxialTilt\": 3.13, \"axialPrecessionPeriod\": 0, \"siderealDay\": 0.41354},\n");
                 json.append("    {\"name\": \"Saturn\", \"nodal\": 50687, \"apsidal\": 1400000, \"minAxialTilt\": 26.73, \"maxAxialTilt\": 26.73, \"axialPrecessionPeriod\": 0, \"siderealDay\": 0.44401},\n");
                 json.append("    {\"name\": \"Uranus\", \"nodal\": 0, \"apsidal\": 0, \"minAxialTilt\": 97.77, \"maxAxialTilt\": 97.77, \"axialPrecessionPeriod\": 0, \"siderealDay\": -0.71833},\n");
@@ -114,7 +114,7 @@ public class PreccesingOrbit {
                 json.append("    {\"name\": \"Pluto\", \"nodal\": 20000, \"apsidal\": 19951, \"minAxialTilt\": 102, \"maxAxialTilt\": 126, \"axialPrecessionPeriod\": 3000000, \"siderealDay\": 6.387}\n");
                 json.append("  ],\n");  // close planets array
                 json.append("  \"moons\": [\n");
-                json.append("    {\"name\": \"Moon\", \"minAxialTilt\": 1.54, \"maxAxialTilt\": 1.54, \"axialPrecessionPeriod\": 0, \"siderealDay\": 27.3216625}\n");
+                json.append("    {\"name\": \"Moon\", \"minAxialTilt\": 1.54, \"maxAxialTilt\": 1.54, \"axialPrecessionPeriod\": 0, \"siderealDay\": 1}\n");
                 json.append("  ]\n");  // close moons array
                 json.append("}\n");   // close JSON object
 
@@ -135,12 +135,33 @@ public class PreccesingOrbit {
 
         private static void parseJson(String json) {
             json = json.trim();
-            int planetsStart = json.indexOf("[");
-            int planetsEnd = json.lastIndexOf("]");
-            if (planetsStart == -1 || planetsEnd == -1) return;
-            String planetsArray = json.substring(planetsStart + 1, planetsEnd);
-            String[] planetObjects = planetsArray.split("\\},\\s*\\{");
-            for (String obj : planetObjects) {
+
+            // Parse planets array
+            int planetsStart = json.indexOf("\"planets\"");
+            if (planetsStart != -1) {
+                planetsStart = json.indexOf("[", planetsStart);
+                int planetsEnd = json.indexOf("]", planetsStart);
+                if (planetsStart != -1 && planetsEnd != -1) {
+                    String planetsArray = json.substring(planetsStart + 1, planetsEnd);
+                    parseArray(planetsArray);
+                }
+            }
+
+            // Parse moons array
+            int moonsStart = json.indexOf("\"moons\"");
+            if (moonsStart != -1) {
+                moonsStart = json.indexOf("[", moonsStart);
+                int moonsEnd = json.indexOf("]", moonsStart);
+                if (moonsStart != -1 && moonsEnd != -1) {
+                    String moonsArray = json.substring(moonsStart + 1, moonsEnd);
+                    parseArray(moonsArray);
+                }
+            }
+        }
+
+        private static void parseArray(String arrayContent) {
+            String[] objects = arrayContent.split("\\},\\s*\\{");
+            for (String obj : objects) {
                 obj = obj.replace("{", "").replace("}", "").trim();
                 String name = null;
                 double nodal = 0;
@@ -212,7 +233,7 @@ public class PreccesingOrbit {
             rootField.setAccessible(true);
             Object root = rootField.get(null);
 
-            System.out.println("DEBUG: Got root: " + root);
+            //System.out.println("DEBUG: Got root: " + root);
 
             if (root == null) {
                 System.err.println("ERROR: PlanetManager.root is null - planets not loaded yet");
@@ -224,13 +245,13 @@ public class PreccesingOrbit {
             Object sun = findChild.invoke(root, "sun");
 
             if (sun != null) {
-                System.out.println("DEBUG: Found sun, processing its children...");
+                //System.out.println("DEBUG: Found sun, processing its children...");
                 applyPrecessionToBody(sun);
             } else {
                 System.err.println("ERROR: Could not find sun body");
             }
 
-            System.out.println("Precession application complete!");
+            //System.out.println("Precession application complete!");
 
         } catch (Exception e) {
             System.err.println("Error applying precession:");
@@ -270,7 +291,7 @@ public class PreccesingOrbit {
                 Method setPrecession = positioner.getClass().getMethod("astrocraftAddon$setPrecession", double.class, double.class);
                 setPrecession.invoke(positioner, precData.nodalPeriod, precData.apsidalPeriod);
 
-                System.out.println("Applied precession to " + planetName + " (" + id + "): nodal=" + precData.nodalPeriod + ", apsidal=" + precData.apsidalPeriod);
+                //System.out.println("Applied precession to " + planetName + " (" + id + "): nodal=" + precData.nodalPeriod + ", apsidal=" + precData.apsidalPeriod);
             }
         }
 

@@ -20,10 +20,10 @@ public class AstrocraftAddonClient implements ClientModInitializer {
         ClientTickEvents.END_WORLD_TICK.register(world -> {
 
             try {
-                System.out.println("Attempting to apply precession...");
+                //System.out.println("Attempting to apply precession...");
                 PreccesingOrbit.applyPrecessionToPlanets();
                 precessionApplied = true;
-                System.out.println("AstroCraft Addon: Precession system loaded successfully!");
+                //System.out.println("AstroCraft Addon: Precession system loaded successfully!");
             } catch (Exception e) {
                 System.err.println("AstroCraft Addon: Failed to apply precession:");
                 e.printStackTrace();
