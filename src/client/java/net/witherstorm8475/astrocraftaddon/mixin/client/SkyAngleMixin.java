@@ -43,7 +43,7 @@ public class SkyAngleMixin {
                     PreccesingOrbit.PrecessionConfig.getPrecession(bodyName);
 
             // Determine rotation period
-            double rotationPeriod = precData.siderealDay;
+            double rotationPeriod = precData.Day;
 
             // If rotation period is 0, freeze the sky
             if (rotationPeriod == 0.0) {
