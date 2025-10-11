@@ -6,7 +6,8 @@
   "client": [
     "OrbitMixin",
     "SkyRendererMixin",
-    "SkyAngleMixin"
+    "SkyAngleMixin",
+    "AuroraRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

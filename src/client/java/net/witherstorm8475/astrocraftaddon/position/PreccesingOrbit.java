@@ -75,7 +75,7 @@ public class PreccesingOrbit {
                     File configFile = new File("config/astrocraft-151-addon/precession.json");
                     if (configFile.exists()) {
                         stream = new FileInputStream(configFile);
-                        System.out.println("Loading precession.json from config folder");
+                        //System.out.println("Loading precession.json from config folder");
                     }
                 }
                 if (stream == null) {
