@@ -11,15 +11,18 @@ public class AtmosphericEvents {
 
     private static Map<String, PlanetAtmosphere> ATMOSPHERE_MAP = null;
     private static Map<String, SolarStormState> STORM_STATES = new HashMap<>();
+    private static Map<String, ForestFireState> FIRE_STATES = new HashMap<>();
     private static Random random = new Random();
 
     public static class PlanetAtmosphere {
         public final AuroraConfig auroras;
         public final SolarStormConfig solarStorms;
+        public final ForestFireConfig forestFires;
 
-        public PlanetAtmosphere(AuroraConfig auroras, SolarStormConfig storms) {
+        public PlanetAtmosphere(AuroraConfig auroras, SolarStormConfig storms, ForestFireConfig fires) {
             this.auroras = auroras;
             this.solarStorms = storms;
+            this.forestFires = fires;
         }
     }
 
@@ -71,6 +74,52 @@ public class AtmosphericEvents {
             this.minInterval = minInt;
             this.maxInterval = maxInt;
             this.intensity = intensity;
+        }
+    }
+
+    public static class ForestFireConfig {
+        public final boolean enabled;
+        public final double minDuration;
+        public final double maxDuration;
+        public final double minInterval;
+        public final double maxInterval;
+        public final int skyTintStart; // Color as int (RGB)
+        public final int skyTintEnd;
+        public final double maxTintStrength; // 0.0 to 1.0
+        public final double spreadRadius; // How far the tint effect spreads
+
+        public ForestFireConfig(boolean enabled, double minDur, double maxDur,
+                                double minInt, double maxInt, int tintStart, int tintEnd,
+                                double tintStrength, double radius) {
+            this.enabled = enabled;
+            this.minDuration = minDur;
+            this.maxDuration = maxDur;
+            this.minInterval = minInt;
+            this.maxInterval = maxInt;
+            this.skyTintStart = tintStart;
+            this.skyTintEnd = tintEnd;
+            this.maxTintStrength = tintStrength;
+            this.spreadRadius = radius;
+        }
+    }
+
+    public static class ForestFireState {
+        public boolean active;
+        public double startTime;
+        public double endTime;
+        public double nextFireTime;
+        public double intensity;
+        public double centerX;
+        public double centerZ;
+
+        public ForestFireState() {
+            this.active = false;
+            this.startTime = 0;
+            this.endTime = 0;
+            this.nextFireTime = 0;
+            this.intensity = 0;
+            this.centerX = 0;
+            this.centerZ = 0;
         }
     }
 
@@ -189,8 +238,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#0088FF\", \"#00FFFF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
             json.append("        \"height\": 180.0,\n");
             json.append("        \"thickness\": 40.0,\n");
             json.append("        \"waveSpeed\": 0.08,\n");
@@ -213,8 +262,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#00FFFF\", \"#88FFFF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -70.0, \"maxLatitude\": -50.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 50.0, \"maxLatitude\": 70.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": 50.0, \"maxLatitude\": 70.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": -70.0, \"maxLatitude\": -50.0},\n");
             json.append("        \"height\": 170.0,\n");
             json.append("        \"thickness\": 35.0,\n");
             json.append("        \"waveSpeed\": 0.06,\n");
@@ -237,8 +286,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#0044FF\", \"#0088FF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -80.0, \"maxLatitude\": -65.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 65.0, \"maxLatitude\": 80.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": 65.0, \"maxLatitude\": 80.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": -80.0, \"maxLatitude\": -65.0},\n");
             json.append("        \"height\": 160.0,\n");
             json.append("        \"thickness\": 35.0,\n");
             json.append("        \"waveSpeed\": 0.07,\n");
@@ -263,8 +312,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#FF8800\", \"#FFAA00\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
             json.append("        \"height\": 100.0,\n");
             json.append("        \"thickness\": 20.0,\n");
             json.append("        \"waveSpeed\": 0.03,\n");
@@ -357,8 +406,11 @@ public class AtmosphericEvents {
         // Parse solar storm config
         SolarStormConfig stormConfig = parseSolarStormConfig(planetObj);
 
-        if (auroraConfig != null || stormConfig != null) {
-            ATMOSPHERE_MAP.put(name.toLowerCase(), new PlanetAtmosphere(auroraConfig, stormConfig));
+        // Parse forest fire config
+        ForestFireConfig fireConfig = parseForestFireConfig(planetObj);
+
+        if (auroraConfig != null || stormConfig != null || fireConfig != null) {
+            ATMOSPHERE_MAP.put(name.toLowerCase(), new PlanetAtmosphere(auroraConfig, stormConfig, fireConfig));
         }
     }
 
@@ -419,6 +471,36 @@ public class AtmosphericEvents {
         double intensity = parseDouble(planetObj.substring(stormStart), "intensity", 0.8);
 
         return new SolarStormConfig(enabled, minDur, maxDur, minInt, maxInt, intensity);
+    }
+
+    private static ForestFireConfig parseForestFireConfig(String planetObj) {
+        int fireStart = planetObj.indexOf("\"forestFires\"");
+        if (fireStart == -1) return null;
+
+        String fireSection = planetObj.substring(fireStart);
+        boolean enabled = fireSection.contains("\"enabled\": true");
+        double minDur = parseDouble(fireSection, "minDuration", 2.0);
+        double maxDur = parseDouble(fireSection, "maxDuration", 10.0);
+        double minInt = parseDouble(fireSection, "minInterval", 30.0);
+        double maxInt = parseDouble(fireSection, "maxInterval", 120.0);
+        double maxTint = parseDouble(fireSection, "maxTintStrength", 0.7);
+        double radius = parseDouble(fireSection, "spreadRadius", 5000.0);
+
+        // Parse colors
+        int tintStart = parseColor(fireSection, "skyTintStart", 0xFFAA00);
+        int tintEnd = parseColor(fireSection, "skyTintEnd", 0xFF4400);
+
+        return new ForestFireConfig(enabled, minDur, maxDur, minInt, maxInt, tintStart, tintEnd, maxTint, radius);
+    }
+
+    private static int parseColor(String json, String key, int defaultValue) {
+        String colorStr = extractValue(json, key);
+        if (colorStr != null && colorStr.startsWith("#")) {
+            try {
+                return Integer.parseInt(colorStr.substring(1), 16);
+            } catch (Exception e) {}
+        }
+        return defaultValue;
     }
 
     private static String extractValue(String json, String key) {
@@ -512,5 +594,56 @@ public class AtmosphericEvents {
     public static double getSolarStormIntensity(String planetName) {
         SolarStormState state = STORM_STATES.get(planetName.toLowerCase());
         return (state != null && state.active) ? state.intensity : 0.0;
+    }
+
+    // Forest Fire methods
+    public static void updateForestFires(String planetName, double currentTime, double playerX, double playerZ) {
+        PlanetAtmosphere atmosphere = getAtmosphere(planetName);
+        if (atmosphere == null || atmosphere.forestFires == null || !atmosphere.forestFires.enabled) {
+            return;
+        }
+
+        ForestFireState state = FIRE_STATES.computeIfAbsent(planetName.toLowerCase(), k -> new ForestFireState());
+
+        // Initialize if first time
+        if (state.nextFireTime == 0) {
+            double interval = atmosphere.forestFires.minInterval +
+                    random.nextDouble() * (atmosphere.forestFires.maxInterval - atmosphere.forestFires.minInterval);
+            state.nextFireTime = currentTime + interval;
+        }
+
+        // Check if fire should start
+        if (!state.active && currentTime >= state.nextFireTime) {
+            state.active = true;
+            state.startTime = currentTime;
+            double duration = atmosphere.forestFires.minDuration +
+                    random.nextDouble() * (atmosphere.forestFires.maxDuration - atmosphere.forestFires.minDuration);
+            state.endTime = currentTime + duration;
+
+            // Set fire center near player (with some randomness)
+            state.centerX = playerX + (random.nextDouble() - 0.5) * 10000.0;
+            state.centerZ = playerZ + (random.nextDouble() - 0.5) * 10000.0;
+            state.intensity = 1.0;
+
+            System.out.println("Forest fire started on " + planetName + " for " + duration + " days at " + state.centerX + ", " + state.centerZ);
+        }
+
+        // Check if fire should end
+        if (state.active && currentTime >= state.endTime) {
+            state.active = false;
+            double interval = atmosphere.forestFires.minInterval +
+                    random.nextDouble() * (atmosphere.forestFires.maxInterval - atmosphere.forestFires.minInterval);
+            state.nextFireTime = currentTime + interval;
+            System.out.println("Forest fire ended on " + planetName + ". Next in " + interval + " days");
+        }
+    }
+
+    public static boolean isForestFireActive(String planetName) {
+        ForestFireState state = FIRE_STATES.get(planetName.toLowerCase());
+        return state != null && state.active;
+    }
+
+    public static ForestFireState getForestFireState(String planetName) {
+        return FIRE_STATES.get(planetName.toLowerCase());
     }
 }
