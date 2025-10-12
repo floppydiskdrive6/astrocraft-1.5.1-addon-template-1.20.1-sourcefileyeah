@@ -18,7 +18,7 @@ public class AstrocraftAddonClient implements ClientModInitializer {
         PreccesingOrbit.PrecessionConfig.load();
 
         // Initialize aurora renderer
-        AuroraRenderer.init();
+        //AuroraRenderer.init();
 
         // Wait a few ticks for AstroCraft to initialize its planets
         ClientTickEvents.END_WORLD_TICK.register(world -> {

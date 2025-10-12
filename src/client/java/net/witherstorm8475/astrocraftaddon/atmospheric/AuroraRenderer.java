@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 
 public class AuroraRenderer {
 
-    private static final Identifier AURORA_TEXTURE = new Identifier("astrocraft-151-addon", "textures/aurora.png");
+    private static final Identifier AURORA_TEXTURE = new Identifier("astrocraft-151-addon","textures/aurora.png");
     private static double animationTime = 0.0;
 
     public static void render() {
@@ -24,16 +24,30 @@ public class AuroraRenderer {
             obsBodyField.setAccessible(true);
             Body obsBody = (Body) obsBodyField.get(null);
 
-            if (obsBody == null) return;
+            if (obsBody == null) {
+                //System.out.println("DEBUG Aurora: obsBody is null");
+                return;
+            }
 
             // Get planet name
             String bodyId = obsBody.getID();
             String[] parts = bodyId.split("\\.");
             String planetName = parts[parts.length - 1];
 
+            //System.out.println("DEBUG Aurora: On planet: " + planetName);
+
             // Get atmosphere config
             AtmosphericEvents.PlanetAtmosphere atmosphere = AtmosphericEvents.getAtmosphere(planetName);
-            if (atmosphere == null || atmosphere.auroras == null || !atmosphere.auroras.enabled) {
+            if (atmosphere == null) {
+                //System.out.println("DEBUG Aurora: No atmosphere config for " + planetName);
+                return;
+            }
+            if (atmosphere.auroras == null) {
+                //System.out.println("DEBUG Aurora: No aurora config for " + planetName);
+                return;
+            }
+            if (!atmosphere.auroras.enabled) {
+                //System.out.println("DEBUG Aurora: Auroras disabled for " + planetName);
                 return;
             }
 
@@ -42,18 +56,24 @@ public class AuroraRenderer {
             AtmosphericEvents.updateSolarStorms(planetName, currentTime);
 
             // Only render during solar storms
-            if (!AtmosphericEvents.isSolarStormActive(planetName)) {
+            boolean stormActive = AtmosphericEvents.isSolarStormActive(planetName);
+            //System.out.println("DEBUG Aurora: Storm active: " + stormActive + " at time: " + currentTime);
+
+            if (!stormActive) {
                 return;
             }
 
             // Get player latitude
             double latitude = SkyRenderer.getLatitude();
+            //System.out.println("DEBUG Aurora: Player latitude: " + latitude);
 
             // Determine which aurora to render
             boolean renderBorealis = latitude >= atmosphere.auroras.borealisMinLat &&
                     latitude <= atmosphere.auroras.borealisMaxLat;
             boolean renderAustralis = latitude >= atmosphere.auroras.australisMinLat &&
                     latitude <= atmosphere.auroras.australisMaxLat;
+
+            //System.out.println("DEBUG Aurora: Borealis: " + renderBorealis + ", Australis: " + renderAustralis);
 
             if (!renderBorealis && !renderAustralis) {
                 return; // Not in aurora zone
@@ -67,6 +87,7 @@ public class AuroraRenderer {
 
             // Get storm intensity for alpha
             double intensity = AtmosphericEvents.getSolarStormIntensity(planetName);
+            //System.out.println("DEBUG Aurora: RENDERING AURORA! Intensity: " + intensity);
 
             // Render auroras
             if (renderBorealis) {
@@ -77,7 +98,8 @@ public class AuroraRenderer {
             }
 
         } catch (Exception e) {
-            // Silently fail
+            System.err.println("DEBUG Aurora: Exception!");
+            e.printStackTrace();
         }
     }
 

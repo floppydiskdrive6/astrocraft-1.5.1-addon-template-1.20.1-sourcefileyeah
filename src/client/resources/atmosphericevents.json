@@ -6,12 +6,12 @@
         "enabled": true,
         "colors": ["#00FF00", "#00FF88", "#0088FF"],
         "borealis": {
-          "minLatitude": 60.0,
-          "maxLatitude": 80.0
+          "minLatitude": -80.0,
+          "maxLatitude": -40.0
         },
         "australis": {
-          "minLatitude": -80.0,
-          "maxLatitude": -60.0
+          "minLatitude": 40.0,
+          "maxLatitude": 80.0
         },
         "height": 150.0,
         "thickness": 30.0,
@@ -23,8 +23,8 @@
         "enabled": true,
         "minDuration": 1.0,
         "maxDuration": 5.0,
-        "minInterval": 20.0,
-        "maxInterval": 50.0,
+        "minInterval": 0,
+        "maxInterval": 0,
         "intensity": 0.8
       }
     },
