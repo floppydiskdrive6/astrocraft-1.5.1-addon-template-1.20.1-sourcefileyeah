@@ -1,5 +1,6 @@
 package net.witherstorm8475.astrocraftaddon.atmospheric;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.lwhrvw.astrocraft.planets.Body;
 import mod.lwhrvw.astrocraft.planets.PlanetManager;
@@ -95,27 +96,30 @@ public class ForestFireRenderer {
 
     private static void renderFullScreenTint(MatrixStack matrices, float r, float g, float b, float a) {
         RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
+        RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
-
+        RenderSystem.disableCull();
         RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        Matrix4f matrix = matrices.peek().getPositionMatrix();
+        // ✅ Manual ModelViewProjection matrix for 1.20.1
+        Matrix4f matrix = new Matrix4f(RenderSystem.getProjectionMatrix());
+        matrix.mul(RenderSystem.getModelViewMatrix());
+
         BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 
-        // Full screen quad
-        bufferBuilder.vertex(matrix, -1, -1, -0.5f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, 1, -1, -0.5f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, 1, 1, -0.5f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, -1, 1, -0.5f).color(r, g, b, a).next();
+        // Fullscreen quad in NDC space
+        bufferBuilder.vertex(matrix, -1.0f, -1.0f, 0.0f).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix,  1.0f, -1.0f, 0.0f).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix,  1.0f,  1.0f, 0.0f).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix, -1.0f,  1.0f, 0.0f).color(r, g, b, a).next();
 
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 
         RenderSystem.enableDepthTest();
         RenderSystem.depthMask(true);
-        RenderSystem.disableBlend();
+        RenderSystem.enableCull();
+        RenderSystem.defaultBlendFunc();
     }
 }
