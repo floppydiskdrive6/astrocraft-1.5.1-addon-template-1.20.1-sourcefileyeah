@@ -5,18 +5,18 @@
       "nodal": 325513,
       "apsidal": 280000,
       "axialPrecessionPeriod": 0,
-      "minAxialTilt": 0.034,
+      "minAxialTilt": 0.01,
       "maxAxialTilt": 0.034,
-      "siderealDay": 176
+      "Day": 176
     },
     {
       "name": "Venus",
       "nodal": 29000,
       "apsidal": 29000,
       "axialPrecessionPeriod": 0,
-      "minAxialTilt": 177.36,
-      "maxAxialTilt": 177.36,
-      "siderealDay": -116.75
+      "minAxialTilt": 2.64,
+      "maxAxialTilt": 2.64,
+      "Day": -116.75
     },
     {
       "name": "Earth",
@@ -25,7 +25,7 @@
       "axialPrecessionPeriod": 25772,
       "minAxialTilt": 22.1,
       "maxAxialTilt": 24.5,
-      "siderealDay": 1
+      "Day": 1
     },
     {
       "name": "Mars",
@@ -34,7 +34,7 @@
       "axialPrecessionPeriod": 170000,
       "minAxialTilt": 22.04,
       "maxAxialTilt": 26.14,
-      "siderealDay": 1.027
+      "Day": 1.027
     },
     {
       "name": "Jupiter",
@@ -43,7 +43,7 @@
       "axialPrecessionPeriod": 0,
       "minAxialTilt": 3.13,
       "maxAxialTilt": 3.13,
-      "siderealDay": 0.41354
+      "Day": 0.41354
     },
     {
       "name": "Saturn",
@@ -52,16 +52,16 @@
       "axialPrecessionPeriod": 0,
       "minAxialTilt": 26.73,
       "maxAxialTilt": 26.73,
-      "siderealDay": 0.44401
+      "Day": 0.44401
     },
     {
       "name": "Uranus",
       "nodal": 0,
       "apsidal": 0,
       "axialPrecessionPeriod": 0,
-      "minAxialTilt": 97.77,
-      "maxAxialTilt": 97.77,
-      "siderealDay": -0.71833
+      "minAxialTilt": 82.23,
+      "maxAxialTilt": 82.23,
+      "Day": -0.71833
     },
     {
       "name": "Neptune",
@@ -70,7 +70,7 @@
       "axialPrecessionPeriod": 0,
       "minAxialTilt": 28.32,
       "maxAxialTilt": 28.32,
-      "siderealDay": 0.67125
+      "Day": 0.67125
     },
     {
       "name": "Pluto",
@@ -79,7 +79,7 @@
       "axialPrecessionPeriod": 3000000,
       "minAxialTilt": 102,
       "maxAxialTilt": 126,
-      "siderealDay": 6.387
+      "Day": 6.387
     }
   ],
   "moons": [
@@ -88,7 +88,7 @@
       "axialPrecessionPeriod": 18.6,
       "minAxialTilt": 1.54,
       "maxAxialTilt": 1.54,
-      "siderealDay": 1
+      "Day": 1
     }
   ]
 }
