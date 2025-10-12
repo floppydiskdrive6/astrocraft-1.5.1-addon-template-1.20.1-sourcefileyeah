@@ -18,11 +18,13 @@ public class AtmosphericEvents {
         public final AuroraConfig auroras;
         public final SolarStormConfig solarStorms;
         public final ForestFireConfig forestFires;
+        public final SkyColorsConfig skyColors;
 
-        public PlanetAtmosphere(AuroraConfig auroras, SolarStormConfig storms, ForestFireConfig fires) {
+        public PlanetAtmosphere(AuroraConfig auroras, SolarStormConfig storms, ForestFireConfig fires, SkyColorsConfig colors) {
             this.auroras = auroras;
             this.solarStorms = storms;
             this.forestFires = fires;
+            this.skyColors = colors;
         }
     }
 
@@ -123,6 +125,22 @@ public class AtmosphericEvents {
         }
     }
 
+    public static class SkyColorsConfig {
+        public final int sunriseColor;
+        public final int sunsetColor;
+        public final int dayColor;
+        public final int nightColor;
+        public final int horizonColor;
+
+        public SkyColorsConfig(int sunrise, int sunset, int day, int night, int horizon) {
+            this.sunriseColor = sunrise;
+            this.sunsetColor = sunset;
+            this.dayColor = day;
+            this.nightColor = night;
+            this.horizonColor = horizon;
+        }
+    }
+
     public static class SolarStormState {
         public boolean active;
         public double startTime;
@@ -205,6 +223,36 @@ public class AtmosphericEvents {
             json.append("        \"minInterval\": 20.0,\n");
             json.append("        \"maxInterval\": 50.0,\n");
             json.append("        \"intensity\": 0.8\n");
+            json.append("      },\n");
+            json.append("      \"forestFires\": {\n");
+            json.append("        \"enabled\": true,\n");
+            json.append("        \"minDuration\": 2.0,\n");
+            json.append("        \"maxDuration\": 10.0,\n");
+            json.append("        \"minInterval\": 30.0,\n");
+            json.append("        \"maxInterval\": 120.0,\n");
+            json.append("        \"skyTintStart\": \"#FFAA00\",\n");
+            json.append("        \"skyTintEnd\": \"#FF4400\",\n");
+            json.append("        \"maxTintStrength\": 0.7,\n");
+            json.append("        \"spreadRadius\": 5000.0\n");
+            json.append("      },\n");
+            json.append("      \"skyColors\": {\n");
+            json.append("        \"sunriseColor\": \"#FFA040\",\n");
+            json.append("        \"sunsetColor\": \"#FF6020\",\n");
+            json.append("        \"dayColor\": \"#87CEEB\",\n");
+            json.append("        \"nightColor\": \"#000814\",\n");
+            json.append("        \"horizonColor\": \"#FFB080\"\n");
+            json.append("      }\n");
+            json.append("    },\n");
+
+            // Mars
+            json.append("    {\n");
+            json.append("      \"name\": \"Mars\",\n");
+            json.append("      \"skyColors\": {\n");
+            json.append("        \"sunriseColor\": \"#4080C0\",\n");
+            json.append("        \"sunsetColor\": \"#2060A0\",\n");
+            json.append("        \"dayColor\": \"#E8C9A6\",\n");
+            json.append("        \"nightColor\": \"#1A1410\",\n");
+            json.append("        \"horizonColor\": \"#C09060\"\n");
             json.append("      }\n");
             json.append("    },\n");
 
@@ -238,8 +286,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#0088FF\", \"#00FFFF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
             json.append("        \"height\": 180.0,\n");
             json.append("        \"thickness\": 40.0,\n");
             json.append("        \"waveSpeed\": 0.08,\n");
@@ -262,8 +310,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#00FFFF\", \"#88FFFF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 50.0, \"maxLatitude\": 70.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -70.0, \"maxLatitude\": -50.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -70.0, \"maxLatitude\": -50.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 50.0, \"maxLatitude\": 70.0},\n");
             json.append("        \"height\": 170.0,\n");
             json.append("        \"thickness\": 35.0,\n");
             json.append("        \"waveSpeed\": 0.06,\n");
@@ -286,8 +334,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#0044FF\", \"#0088FF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 65.0, \"maxLatitude\": 80.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -80.0, \"maxLatitude\": -65.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -80.0, \"maxLatitude\": -65.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 65.0, \"maxLatitude\": 80.0},\n");
             json.append("        \"height\": 160.0,\n");
             json.append("        \"thickness\": 35.0,\n");
             json.append("        \"waveSpeed\": 0.07,\n");
@@ -312,8 +360,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#FF8800\", \"#FFAA00\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
             json.append("        \"height\": 100.0,\n");
             json.append("        \"thickness\": 20.0,\n");
             json.append("        \"waveSpeed\": 0.03,\n");
@@ -409,8 +457,11 @@ public class AtmosphericEvents {
         // Parse forest fire config
         ForestFireConfig fireConfig = parseForestFireConfig(planetObj);
 
-        if (auroraConfig != null || stormConfig != null || fireConfig != null) {
-            ATMOSPHERE_MAP.put(name.toLowerCase(), new PlanetAtmosphere(auroraConfig, stormConfig, fireConfig));
+        // Parse sky colors config
+        SkyColorsConfig colorsConfig = parseSkyColorsConfig(planetObj);
+
+        if (auroraConfig != null || stormConfig != null || fireConfig != null || colorsConfig != null) {
+            ATMOSPHERE_MAP.put(name.toLowerCase(), new PlanetAtmosphere(auroraConfig, stormConfig, fireConfig, colorsConfig));
         }
     }
 
@@ -501,6 +552,20 @@ public class AtmosphericEvents {
             } catch (Exception e) {}
         }
         return defaultValue;
+    }
+
+    private static SkyColorsConfig parseSkyColorsConfig(String planetObj) {
+        int colorsStart = planetObj.indexOf("\"skyColors\"");
+        if (colorsStart == -1) return null;
+
+        String colorsSection = planetObj.substring(colorsStart);
+        int sunrise = parseColor(colorsSection, "sunriseColor", 0xFFA040);
+        int sunset = parseColor(colorsSection, "sunsetColor", 0xFF6020);
+        int day = parseColor(colorsSection, "dayColor", 0x87CEEB);
+        int night = parseColor(colorsSection, "nightColor", 0x000814);
+        int horizon = parseColor(colorsSection, "horizonColor", 0xFFB080);
+
+        return new SkyColorsConfig(sunrise, sunset, day, night, horizon);
     }
 
     private static String extractValue(String json, String key) {
