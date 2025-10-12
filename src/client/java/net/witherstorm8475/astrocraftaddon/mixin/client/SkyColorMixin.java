@@ -3,7 +3,6 @@ package net.witherstorm8475.astrocraftaddon.mixin.client;
 import mod.lwhrvw.astrocraft.Astrocraft;
 import mod.lwhrvw.astrocraft.planets.Body;
 import mod.lwhrvw.astrocraft.planets.PlanetManager;
-import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;
 import net.witherstorm8475.astrocraftaddon.atmospheric.AtmosphericEvents;
@@ -15,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.Field;
 
-@Mixin(WorldRenderer.class)
+@Mixin(ClientWorld.class)
 public class SkyColorMixin {
 
     @Inject(method = "getSkyColor", at = @At("HEAD"), cancellable = true)
