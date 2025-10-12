@@ -141,8 +141,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#00FF00\", \"#00FF88\", \"#0088FF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 60.0, \"maxLatitude\": 80.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -80.0, \"maxLatitude\": -60.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -80.0, \"maxLatitude\": -60.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 60.0, \"maxLatitude\": 80.0},\n");
             json.append("        \"height\": 150.0,\n");
             json.append("        \"thickness\": 30.0,\n");
             json.append("        \"waveSpeed\": 0.05,\n");
@@ -165,8 +165,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#8800FF\", \"#FF00FF\", \"#FF0088\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 55.0, \"maxLatitude\": 75.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -75.0, \"maxLatitude\": -55.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -75.0, \"maxLatitude\": -55.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 55.0, \"maxLatitude\": 75.0},\n");
             json.append("        \"height\": 200.0,\n");
             json.append("        \"thickness\": 50.0,\n");
             json.append("        \"waveSpeed\": 0.1,\n");
@@ -189,8 +189,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#0088FF\", \"#00FFFF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
             json.append("        \"height\": 180.0,\n");
             json.append("        \"thickness\": 40.0,\n");
             json.append("        \"waveSpeed\": 0.08,\n");
@@ -213,8 +213,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#00FFFF\", \"#88FFFF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 50.0, \"maxLatitude\": 70.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -70.0, \"maxLatitude\": -50.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -70.0, \"maxLatitude\": -50.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 50.0, \"maxLatitude\": 70.0},\n");
             json.append("        \"height\": 170.0,\n");
             json.append("        \"thickness\": 35.0,\n");
             json.append("        \"waveSpeed\": 0.06,\n");
@@ -237,8 +237,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#0044FF\", \"#0088FF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 65.0, \"maxLatitude\": 80.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -80.0, \"maxLatitude\": -65.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -80.0, \"maxLatitude\": -65.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 65.0, \"maxLatitude\": 80.0},\n");
             json.append("        \"height\": 160.0,\n");
             json.append("        \"thickness\": 35.0,\n");
             json.append("        \"waveSpeed\": 0.07,\n");
@@ -263,8 +263,8 @@ public class AtmosphericEvents {
             json.append("      \"auroras\": {\n");
             json.append("        \"enabled\": true,\n");
             json.append("        \"colors\": [\"#FF8800\", \"#FFAA00\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
+            json.append("        \"borealis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
+            json.append("        \"australis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
             json.append("        \"height\": 100.0,\n");
             json.append("        \"thickness\": 20.0,\n");
             json.append("        \"waveSpeed\": 0.03,\n");
