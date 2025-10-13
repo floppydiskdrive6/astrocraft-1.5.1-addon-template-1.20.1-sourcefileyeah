@@ -72,22 +72,22 @@ public class SkyColorMixin {
             return lerp(night, sunrise, clamp01(t));
         }
         // Day: 0.04 -> 0.55
-        else if (timeOfDay > 0.00 && timeOfDay <= 0.44) {
+        else if (timeOfDay > 0.00 && timeOfDay <= 0.49) {
             // Early day ramp (sunrise -> day)
             if (timeOfDay <= 0.08) {
                 double t = (timeOfDay - 0.04) / 0.04;
                 return lerp(sunrise, day, clamp01(t));
             }
             // Sunset ramp (late afternoon)
-            if (timeOfDay > 0.40) {
-                double t = (timeOfDay - 0.40) / 0.05;
+            if (timeOfDay > 0.45) {
+                double t = (timeOfDay - 0.45) / 0.035;
                 return lerp(day, sunset, clamp01(t));
             }
             return day;
         }
         // Night: 0.55 -> 0.96
         else {
-            double t = (timeOfDay - 0.40) / 0.15; // dusk ramp
+            double t = (timeOfDay - 0.49) / 0.05; // dusk ramp
             return lerp(sunset, night, clamp01(t));
         }
     }

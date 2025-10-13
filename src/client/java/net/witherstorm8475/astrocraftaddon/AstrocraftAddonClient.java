@@ -2,7 +2,6 @@ package net.witherstorm8475.astrocraftaddon;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.witherstorm8475.astrocraftaddon.atmospheric.AuroraRenderer;
 import net.witherstorm8475.astrocraftaddon.position.PreccesingOrbit;
 
 public class AstrocraftAddonClient implements ClientModInitializer {
