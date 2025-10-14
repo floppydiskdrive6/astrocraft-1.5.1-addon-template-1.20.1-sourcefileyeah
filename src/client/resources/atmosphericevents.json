@@ -23,8 +23,8 @@
         "enabled": true,
         "minDuration": 1.0,
         "maxDuration": 5.0,
-        "minInterval": 20.0,
-        "maxInterval": 50.0,
+        "minInterval": 0,
+        "maxInterval": 0,
         "intensity": 0.8
       },
       "forestFires": {
