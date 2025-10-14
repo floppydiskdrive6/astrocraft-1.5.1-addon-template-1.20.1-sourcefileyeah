@@ -12,7 +12,24 @@ public class AtmosphericEvents {
     private static Map<String, PlanetAtmosphere> ATMOSPHERE_MAP = null;
     private static Map<String, SolarStormState> STORM_STATES = new HashMap<>();
     private static Map<String, ForestFireState> FIRE_STATES = new HashMap<>();
+    private static LightPollutionConfig GLOBAL_LIGHT_POLLUTION = null;
     private static Random random = new Random();
+
+    public static class LightPollutionConfig {
+        public final LightPollutionSystem.Mode mode;
+        public final float intensity;
+
+        public LightPollutionConfig(String modeStr, float intensity) {
+            LightPollutionSystem.Mode parsedMode;
+            try {
+                parsedMode = LightPollutionSystem.Mode.valueOf(modeStr.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                parsedMode = LightPollutionSystem.Mode.OFF;
+            }
+            this.mode = parsedMode;
+            this.intensity = Math.max(0.0f, Math.min(1.0f, intensity));
+        }
+    }
 
     public static class PlanetAtmosphere {
         public final AuroraConfig auroras;
@@ -85,10 +102,10 @@ public class AtmosphericEvents {
         public final double maxDuration;
         public final double minInterval;
         public final double maxInterval;
-        public final int skyTintStart; // Color as int (RGB)
+        public final int skyTintStart;
         public final int skyTintEnd;
-        public final double maxTintStrength; // 0.0 to 1.0
-        public final double spreadRadius; // How far the tint effect spreads
+        public final double maxTintStrength;
+        public final double spreadRadius;
 
         public ForestFireConfig(boolean enabled, double minDur, double maxDur,
                                 double minInt, double maxInt, int tintStart, int tintEnd,
@@ -159,6 +176,8 @@ public class AtmosphericEvents {
 
     public static void load() {
         ATMOSPHERE_MAP = new HashMap<>();
+        GLOBAL_LIGHT_POLLUTION = null;
+
         try {
             InputStream stream = null;
             stream = AtmosphericEvents.class.getResourceAsStream("/astrocraft-151-addon/atmosphericevents.json");
@@ -190,6 +209,9 @@ public class AtmosphericEvents {
             reader.close();
             parseJson(jsonContent.toString());
             System.out.println("Loaded atmospheric events for " + ATMOSPHERE_MAP.size() + " planets");
+            if (GLOBAL_LIGHT_POLLUTION != null) {
+                System.out.println("Light pollution mode: " + GLOBAL_LIGHT_POLLUTION.mode + " (intensity: " + GLOBAL_LIGHT_POLLUTION.intensity + ")");
+            }
         } catch (Exception e) {
             System.err.println("Error loading atmosphericevents.json:");
             e.printStackTrace();
@@ -197,10 +219,16 @@ public class AtmosphericEvents {
     }
 
     private static void generateDefaultConfig() {
-        // Generate default atmosphericevents.json with all planets and moons
         try {
             StringBuilder json = new StringBuilder();
-            json.append("{\n  \"planets\": [\n");
+
+            json.append("{\n");
+            json.append("  \"lightPollution\": {\n");
+            json.append("    \"mode\": \"dynamic\",\n");
+            json.append("    \"intensity\": 0.5\n");
+            json.append("  },\n");
+
+            json.append("  \"planets\": [\n");
 
             // Venus
             json.append("    {\n");
@@ -265,17 +293,16 @@ public class AtmosphericEvents {
             json.append("      \"skyColors\": {\"sunriseColor\":\"#809FFF\",\"sunsetColor\":\"#4060FF\",\"dayColor\":\"#6090FF\",\"nightColor\":\"#000810\",\"horizonColor\":\"#5070FF\"}\n");
             json.append("    }\n");
 
-            json.append("  ],\n  \"moons\": [\n");
+            json.append("  ],\n");
 
-            // Titan
+            json.append("  \"moons\": [\n");
             json.append("    {\n");
             json.append("      \"name\": \"Titan\",\n");
-            json.append("      \"auroras\": { \"enabled\": false, \"colors\": [], \"borealis\": {\"minLatitude\":0.0,\"maxLatitude\":0.0}, \"australis\": {\"minLatitude\":0.0,\"maxLatitude\":0.0}, \"height\":0.0,\"thickness\":0.0,\"waveSpeed\":0.0,\"waveAmplitude\":0.0,\"horizontalFlowSpeed\":0.0 },\n");
+            json.append("      \"auroras\": { \"enabled\": false,\"colors\":[],\"borealis\":{\"minLatitude\":0.0,\"maxLatitude\":0.0},\"australis\":{\"minLatitude\":0.0,\"maxLatitude\":0.0},\"height\":0.0,\"thickness\":0.0,\"waveSpeed\":0.0,\"waveAmplitude\":0.0,\"horizontalFlowSpeed\":0.0},\n");
             json.append("      \"solarStorms\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"intensity\":0.0},\n");
             json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0},\n");
             json.append("      \"skyColors\": {\"sunriseColor\":\"#FFDDAA\",\"sunsetColor\":\"#FFCC88\",\"dayColor\":\"#FFE8AA\",\"nightColor\":\"#1A0F0F\",\"horizonColor\":\"#FFCC88\"}\n");
             json.append("    }\n");
-
             json.append("  ]\n");
             json.append("}\n");
 
@@ -285,6 +312,7 @@ public class AtmosphericEvents {
             FileWriter writer = new FileWriter(jsonFile);
             writer.write(json.toString());
             writer.close();
+
             System.out.println("Generated atmosphericevents.json at: " + jsonFile.getAbsolutePath());
         } catch (Exception e) {
             System.err.println("Error generating atmosphericevents.json:");
@@ -293,8 +321,21 @@ public class AtmosphericEvents {
     }
 
     private static void parseJson(String json) {
-        // Simple JSON parser for atmospheric events
         json = json.trim();
+
+        // Parse global light pollution
+        int lpStart = json.indexOf("\"lightPollution\"");
+        if (lpStart != -1) {
+            lpStart = json.indexOf("{", lpStart);
+            int lpEnd = findMatchingBrace(json, lpStart);
+            if (lpStart != -1 && lpEnd != -1) {
+                String lpObject = json.substring(lpStart + 1, lpEnd);
+                String mode = extractValue(lpObject, "mode");
+                if (mode == null) mode = "OFF";
+                float intensity = (float) parseDouble(lpObject, "intensity", 0.5);
+                GLOBAL_LIGHT_POLLUTION = new LightPollutionConfig(mode, intensity);
+            }
+        }
 
         // Parse planets array
         int planetsStart = json.indexOf("\"planets\"");
@@ -319,6 +360,19 @@ public class AtmosphericEvents {
         }
     }
 
+    private static int findMatchingBrace(String json, int openIndex) {
+        if (openIndex == -1 || openIndex >= json.length()) return -1;
+        int depth = 0;
+        for (int i = openIndex; i < json.length(); i++) {
+            if (json.charAt(i) == '{') depth++;
+            else if (json.charAt(i) == '}') {
+                depth--;
+                if (depth == 0) return i;
+            }
+        }
+        return -1;
+    }
+
     private static int findMatchingBracket(String json, int openIndex) {
         if (openIndex == -1 || openIndex >= json.length()) return -1;
         int depth = 0;
@@ -341,20 +395,12 @@ public class AtmosphericEvents {
     }
 
     private static void parsePlanetConfig(String planetObj) {
-        // Extract planet name and configs
         String name = extractValue(planetObj, "name");
         if (name == null) return;
 
-        // Parse aurora config
         AuroraConfig auroraConfig = parseAuroraConfig(planetObj);
-
-        // Parse solar storm config
         SolarStormConfig stormConfig = parseSolarStormConfig(planetObj);
-
-        // Parse forest fire config
         ForestFireConfig fireConfig = parseForestFireConfig(planetObj);
-
-        // Parse sky colors config
         SkyColorsConfig colorsConfig = parseSkyColorsConfig(planetObj);
 
         if (auroraConfig != null || stormConfig != null || fireConfig != null || colorsConfig != null) {
@@ -363,13 +409,11 @@ public class AtmosphericEvents {
     }
 
     private static AuroraConfig parseAuroraConfig(String planetObj) {
-        // Simplified aurora parsing
         int auroraStart = planetObj.indexOf("\"auroras\"");
         if (auroraStart == -1) return null;
 
         boolean enabled = planetObj.contains("\"enabled\": true");
 
-        // Parse colors
         List<Integer> colorList = new ArrayList<>();
         int colorsStart = planetObj.indexOf("\"colors\"", auroraStart);
         if (colorsStart != -1) {
@@ -391,7 +435,6 @@ public class AtmosphericEvents {
 
         int[] colors = colorList.stream().mapToInt(i -> i).toArray();
 
-        // Parse latitude ranges
         double bMinLat = parseDouble(planetObj, "borealis.*minLatitude", 60.0);
         double bMaxLat = parseDouble(planetObj, "borealis.*maxLatitude", 80.0);
         double aMinLat = parseDouble(planetObj, "australis.*minLatitude", -80.0);
@@ -434,7 +477,6 @@ public class AtmosphericEvents {
         double maxTint = parseDouble(fireSection, "maxTintStrength", 0.7);
         double radius = parseDouble(fireSection, "spreadRadius", 5000.0);
 
-        // Parse colors
         int tintStart = parseColor(fireSection, "skyTintStart", 0xFFAA00);
         int tintEnd = parseColor(fireSection, "skyTintEnd", 0xFF4400);
 
@@ -512,6 +554,13 @@ public class AtmosphericEvents {
         return ATMOSPHERE_MAP.get(planetName.toLowerCase());
     }
 
+    public static LightPollutionConfig getLightPollution() {
+        if (GLOBAL_LIGHT_POLLUTION == null) {
+            load();
+        }
+        return GLOBAL_LIGHT_POLLUTION;
+    }
+
     public static void updateSolarStorms(String planetName, double currentTime) {
         PlanetAtmosphere atmosphere = getAtmosphere(planetName);
         if (atmosphere == null || atmosphere.solarStorms == null || !atmosphere.solarStorms.enabled) {
@@ -520,14 +569,12 @@ public class AtmosphericEvents {
 
         SolarStormState state = STORM_STATES.computeIfAbsent(planetName.toLowerCase(), k -> new SolarStormState());
 
-        // Initialize if first time
         if (state.nextStormTime == 0) {
             double interval = atmosphere.solarStorms.minInterval +
                     random.nextDouble() * (atmosphere.solarStorms.maxInterval - atmosphere.solarStorms.minInterval);
             state.nextStormTime = currentTime + interval;
         }
 
-        // Check if storm should start
         if (!state.active && currentTime >= state.nextStormTime) {
             state.active = true;
             state.startTime = currentTime;
@@ -538,7 +585,6 @@ public class AtmosphericEvents {
             System.out.println("Solar storm started on " + planetName + " for " + duration + " days");
         }
 
-        // Check if storm should end
         if (state.active && currentTime >= state.endTime) {
             state.active = false;
             double interval = atmosphere.solarStorms.minInterval +
@@ -558,7 +604,6 @@ public class AtmosphericEvents {
         return (state != null && state.active) ? state.intensity : 0.0;
     }
 
-    // Forest Fire methods
     public static void updateForestFires(String planetName, double currentTime, double playerX, double playerZ) {
         PlanetAtmosphere atmosphere = getAtmosphere(planetName);
         if (atmosphere == null || atmosphere.forestFires == null || !atmosphere.forestFires.enabled) {
@@ -567,14 +612,12 @@ public class AtmosphericEvents {
 
         ForestFireState state = FIRE_STATES.computeIfAbsent(planetName.toLowerCase(), k -> new ForestFireState());
 
-        // Initialize if first time
         if (state.nextFireTime == 0) {
             double interval = atmosphere.forestFires.minInterval +
                     random.nextDouble() * (atmosphere.forestFires.maxInterval - atmosphere.forestFires.minInterval);
             state.nextFireTime = currentTime + interval;
         }
 
-        // Check if fire should start
         if (!state.active && currentTime >= state.nextFireTime) {
             state.active = true;
             state.startTime = currentTime;
@@ -582,7 +625,6 @@ public class AtmosphericEvents {
                     random.nextDouble() * (atmosphere.forestFires.maxDuration - atmosphere.forestFires.minDuration);
             state.endTime = currentTime + duration;
 
-            // Set fire center near player (with some randomness)
             state.centerX = playerX + (random.nextDouble() - 0.5) * 10000.0;
             state.centerZ = playerZ + (random.nextDouble() - 0.5) * 10000.0;
             state.intensity = 1.0;
@@ -590,7 +632,6 @@ public class AtmosphericEvents {
             System.out.println("Forest fire started on " + planetName + " for " + duration + " days at " + state.centerX + ", " + state.centerZ);
         }
 
-        // Check if fire should end
         if (state.active && currentTime >= state.endTime) {
             state.active = false;
             double interval = atmosphere.forestFires.minInterval +
