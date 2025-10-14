@@ -9,7 +9,7 @@
     "SkyAngleMixin",
     "ForestFireRendererMixin",
     "SkyColorMixin",
-    "PlanetBelowRendererMixin"
+    "AuroraRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
