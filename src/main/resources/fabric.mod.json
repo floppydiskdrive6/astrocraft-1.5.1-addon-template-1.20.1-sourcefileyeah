@@ -21,6 +21,9 @@
 		"client": [
 			"net.witherstorm8475.astrocraftaddon.AstrocraftAddonClient"
 		],
+      "modmenu": [
+        "net.witherstorm8475.astrocraftaddon.config.AddonModMenuIntegration"
+      ],
 		"fabric-datagen": [
 			"net.witherstorm8475.astrocraftaddon.AstroCraft151AddonDataGenerator"
 		]
