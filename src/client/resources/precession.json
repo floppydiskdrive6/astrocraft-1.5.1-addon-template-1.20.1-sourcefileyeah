@@ -79,7 +79,7 @@
       "axialPrecessionPeriod": 3000000,
       "minAxialTilt": 102,
       "maxAxialTilt": 126,
-      "Day": 6.387
+      "Day": 6.4
     }
   ],
   "moons": [
@@ -89,6 +89,153 @@
       "minAxialTilt": 1.54,
       "maxAxialTilt": 1.54,
       "Day": 29.530589057
+    },
+    {
+      "name": "Phobos",
+      "axialPrecessionPeriod": 2.262,
+      "minAxialTilt": 1.1,
+      "maxAxialTilt": 1.1,
+      "Day": 0.31891
+    },
+    {
+      "name": "Deimos",
+      "axialPrecessionPeriod": 54.537,
+      "minAxialTilt": 1.8,
+      "maxAxialTilt": 1.8,
+      "Day": 1.262361
+    },
+    {
+      "name": "Io",
+      "axialPrecessionPeriod": 1.333,
+      "minAxialTilt": 0.0,
+      "maxAxialTilt": 0.0,
+      "Day": 1.769861
+    },
+    {
+      "name": "Europa",
+      "axialPrecessionPeriod": 30.202,
+      "minAxialTilt": 0.5,
+      "maxAxialTilt": 0.5,
+      "Day": 3.554095
+    },
+    {
+      "name": "Ganymede",
+      "axialPrecessionPeriod": 137.812,
+      "minAxialTilt": 0.2,
+      "maxAxialTilt": 0.2,
+      "Day": 7.166389
+    },
+    {
+      "name": "Callisto",
+      "axialPrecessionPeriod": 577.264,
+      "minAxialTilt": 0.3,
+      "maxAxialTilt": 0.3,
+      "Day": 16.753563
+    },
+    {
+      "name": "Mimas",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.0,
+      "maxAxialTilt": 0.0,
+      "Day": 0.94
+    },
+    {
+      "name": "Enceladus",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.0,
+      "maxAxialTilt": 0.0,
+      "Day": 1.37
+    },
+    {
+      "name": "Tethys",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.0,
+      "maxAxialTilt": 0.0,
+      "Day": 1.89
+    },
+    {
+      "name": "Dione",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.0,
+      "maxAxialTilt": 0.0,
+      "Day": 2.73
+    },
+    {
+      "name": "Rhea",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.0,
+      "maxAxialTilt": 0.0,
+      "Day": 4.52
+    },
+    {
+      "name": "Titan",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.33,
+      "maxAxialTilt": 0.33,
+      "Day": 15.95
+    },
+    {
+      "name": "Hyperion",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.43,
+      "maxAxialTilt": 0.43,
+      "Day": 21.28
+    },
+    {
+      "name": "Iapetus",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 15.47,
+      "maxAxialTilt": 15.47,
+      "Day": 79.32
+    },
+    {
+      "name": "Ariel",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.26,
+      "maxAxialTilt": 0.26,
+      "Day": 2.52
+    },
+    {
+      "name": "Umbriel",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.36,
+      "maxAxialTilt": 0.36,
+      "Day": 4.14
+    },
+    {
+      "name": "Titania",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.08,
+      "maxAxialTilt": 0.08,
+      "Day": 8.71
+    },
+    {
+      "name": "Oberon",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.1,
+      "maxAxialTilt": 0.1,
+      "Day": 13.46
+    },
+    {
+      "name": "Miranda",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 4.22,
+      "maxAxialTilt": 4.22,
+      "Day": 1.41
+    },
+    {
+      "name": "Triton",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 23,
+      "maxAxialTilt": 23,
+      "Day": 5.88
+    },
+    {
+      "name": "Charon",
+      "axialPrecessionPeriod": 0,
+      "minAxialTilt": 0.0,
+      "maxAxialTilt": 0.0,
+      "Day": 6.4
     }
   ]
 }

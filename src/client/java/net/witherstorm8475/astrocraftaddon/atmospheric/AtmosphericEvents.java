@@ -202,188 +202,85 @@ public class AtmosphericEvents {
             StringBuilder json = new StringBuilder();
             json.append("{\n  \"planets\": [\n");
 
+            // Venus
+            json.append("    {\n");
+            json.append("      \"name\": \"Venus\",\n");
+            json.append("      \"auroras\": { \"enabled\": false, \"colors\": [], \"borealis\": {\"minLatitude\":0.0,\"maxLatitude\":0.0}, \"australis\": {\"minLatitude\":0.0,\"maxLatitude\":0.0}, \"height\":0.0,\"thickness\":0.0,\"waveSpeed\":0.0,\"waveAmplitude\":0.0,\"horizontalFlowSpeed\":0.0 },\n");
+            json.append("      \"solarStorms\": { \"enabled\": false, \"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"intensity\":0.0 },\n");
+            json.append("      \"forestFires\": { \"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
+            json.append("      \"skyColors\": {\"sunriseColor\":\"#FFDAB9\",\"sunsetColor\":\"#FFCC99\",\"dayColor\":\"#FFE4B5\",\"nightColor\":\"#2F1E0F\",\"horizonColor\":\"#FFC87C\"}\n");
+            json.append("    },\n");
+
             // Earth
             json.append("    {\n");
             json.append("      \"name\": \"Earth\",\n");
-            json.append("      \"auroras\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"colors\": [\"#00FF00\", \"#00FF88\", \"#0088FF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -80.0, \"maxLatitude\": -60.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 60.0, \"maxLatitude\": 80.0},\n");
-            json.append("        \"height\": 150.0,\n");
-            json.append("        \"thickness\": 30.0,\n");
-            json.append("        \"waveSpeed\": 0.05,\n");
-            json.append("        \"waveAmplitude\": 15.0,\n");
-            json.append("        \"horizontalFlowSpeed\": 0.02\n");
-            json.append("      },\n");
-            json.append("      \"solarStorms\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"minDuration\": 1.0,\n");
-            json.append("        \"maxDuration\": 5.0,\n");
-            json.append("        \"minInterval\": 20.0,\n");
-            json.append("        \"maxInterval\": 50.0,\n");
-            json.append("        \"intensity\": 0.8\n");
-            json.append("      },\n");
-            json.append("      \"forestFires\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"minDuration\": 2.0,\n");
-            json.append("        \"maxDuration\": 10.0,\n");
-            json.append("        \"minInterval\": 30.0,\n");
-            json.append("        \"maxInterval\": 120.0,\n");
-            json.append("        \"skyTintStart\": \"#FFAA00\",\n");
-            json.append("        \"skyTintEnd\": \"#FF4400\",\n");
-            json.append("        \"maxTintStrength\": 0.7,\n");
-            json.append("        \"spreadRadius\": 5000.0\n");
-            json.append("      },\n");
-            json.append("      \"skyColors\": {\n");
-            json.append("        \"sunriseColor\": \"#FFA040\",\n");
-            json.append("        \"sunsetColor\": \"#FF6020\",\n");
-            json.append("        \"dayColor\": \"#87CEEB\",\n");
-            json.append("        \"nightColor\": \"#000814\",\n");
-            json.append("        \"horizonColor\": \"#FFB080\"\n");
-            json.append("      }\n");
+            json.append("      \"auroras\": { \"enabled\": true, \"colors\": [\"#00FF00\",\"#00FF88\",\"#0088FF\"], \"borealis\": {\"minLatitude\":-80.0,\"maxLatitude\":-60.0}, \"australis\": {\"minLatitude\":60.0,\"maxLatitude\":80.0}, \"height\":150.0,\"thickness\":30.0,\"waveSpeed\":0.05,\"waveAmplitude\":15.0,\"horizontalFlowSpeed\":0.02 },\n");
+            json.append("      \"solarStorms\": { \"enabled\": true, \"minDuration\":1.0,\"maxDuration\":5.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"intensity\":0.8 },\n");
+            json.append("      \"forestFires\": { \"enabled\": true, \"minDuration\":2.0,\"maxDuration\":10.0,\"minInterval\":30.0,\"maxInterval\":120.0,\"skyTintStart\":\"#FFAA00\",\"skyTintEnd\":\"#FF4400\",\"maxTintStrength\":0.7,\"spreadRadius\":5000.0 },\n");
+            json.append("      \"skyColors\": {\"sunriseColor\":\"#FFA040\",\"sunsetColor\":\"#FF6020\",\"dayColor\":\"#87CEEB\",\"nightColor\":\"#000814\",\"horizonColor\":\"#FFB080\"}\n");
             json.append("    },\n");
 
             // Mars
             json.append("    {\n");
             json.append("      \"name\": \"Mars\",\n");
-            json.append("      \"skyColors\": {\n");
-            json.append("        \"sunriseColor\": \"#4080C0\",\n");
-            json.append("        \"sunsetColor\": \"#2060A0\",\n");
-            json.append("        \"dayColor\": \"#E8C9A6\",\n");
-            json.append("        \"nightColor\": \"#1A1410\",\n");
-            json.append("        \"horizonColor\": \"#C09060\"\n");
-            json.append("      }\n");
+            json.append("      \"auroras\": {\"enabled\": false,\"colors\":[],\"borealis\":{\"minLatitude\":0.0,\"maxLatitude\":0.0},\"australis\":{\"minLatitude\":0.0,\"maxLatitude\":0.0},\"height\":0.0,\"thickness\":0.0,\"waveSpeed\":0.0,\"waveAmplitude\":0.0,\"horizontalFlowSpeed\":0.0},\n");
+            json.append("      \"solarStorms\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"intensity\":0.0},\n");
+            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0},\n");
+            json.append("      \"skyColors\": {\"sunriseColor\":\"#4080C0\",\"sunsetColor\":\"#2060A0\",\"dayColor\":\"#E8C9A6\",\"nightColor\":\"#1A1410\",\"horizonColor\":\"#C09060\"}\n");
             json.append("    },\n");
 
             // Jupiter
             json.append("    {\n");
             json.append("      \"name\": \"Jupiter\",\n");
-            json.append("      \"auroras\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"colors\": [\"#8800FF\", \"#FF00FF\", \"#FF0088\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -75.0, \"maxLatitude\": -55.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 55.0, \"maxLatitude\": 75.0},\n");
-            json.append("        \"height\": 200.0,\n");
-            json.append("        \"thickness\": 50.0,\n");
-            json.append("        \"waveSpeed\": 0.1,\n");
-            json.append("        \"waveAmplitude\": 25.0,\n");
-            json.append("        \"horizontalFlowSpeed\": 0.05\n");
-            json.append("      },\n");
-            json.append("      \"solarStorms\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"minDuration\": 5.0,\n");
-            json.append("        \"maxDuration\": 15.0,\n");
-            json.append("        \"minInterval\": 10.0,\n");
-            json.append("        \"maxInterval\": 30.0,\n");
-            json.append("        \"intensity\": 1.0\n");
-            json.append("      }\n");
+            json.append("      \"auroras\": { \"enabled\": true, \"colors\": [\"#8800FF\",\"#FF00FF\",\"#FF0088\"], \"borealis\": {\"minLatitude\":-75.0,\"maxLatitude\":-55.0}, \"australis\": {\"minLatitude\":55.0,\"maxLatitude\":75.0}, \"height\":200.0,\"thickness\":50.0,\"waveSpeed\":0.1,\"waveAmplitude\":25.0,\"horizontalFlowSpeed\":0.05 },\n");
+            json.append("      \"solarStorms\": { \"enabled\": true, \"minDuration\":5.0,\"maxDuration\":15.0,\"minInterval\":10.0,\"maxInterval\":30.0,\"intensity\":1.0 },\n");
+            json.append("      \"forestFires\": { \"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
+            json.append("      \"skyColors\": {\"sunriseColor\":\"#FFD8FF\",\"sunsetColor\":\"#FFA0FF\",\"dayColor\":\"#FFCCFF\",\"nightColor\":\"#1A001A\",\"horizonColor\":\"#FFB0FF\"}\n");
             json.append("    },\n");
 
             // Saturn
             json.append("    {\n");
             json.append("      \"name\": \"Saturn\",\n");
-            json.append("      \"auroras\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"colors\": [\"#0088FF\", \"#00FFFF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
-            json.append("        \"height\": 180.0,\n");
-            json.append("        \"thickness\": 40.0,\n");
-            json.append("        \"waveSpeed\": 0.08,\n");
-            json.append("        \"waveAmplitude\": 20.0,\n");
-            json.append("        \"horizontalFlowSpeed\": 0.03\n");
-            json.append("      },\n");
-            json.append("      \"solarStorms\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"minDuration\": 3.0,\n");
-            json.append("        \"maxDuration\": 10.0,\n");
-            json.append("        \"minInterval\": 30.0,\n");
-            json.append("        \"maxInterval\": 80.0,\n");
-            json.append("        \"intensity\": 0.7\n");
-            json.append("      }\n");
+            json.append("      \"auroras\": { \"enabled\": true, \"colors\": [\"#0088FF\",\"#00FFFF\"], \"borealis\": {\"minLatitude\":-85.0,\"maxLatitude\":-70.0}, \"australis\": {\"minLatitude\":70.0,\"maxLatitude\":85.0}, \"height\":180.0,\"thickness\":40.0,\"waveSpeed\":0.08,\"waveAmplitude\":20.0,\"horizontalFlowSpeed\":0.03 },\n");
+            json.append("      \"solarStorms\": { \"enabled\": true, \"minDuration\":3.0,\"maxDuration\":10.0,\"minInterval\":30.0,\"maxInterval\":80.0,\"intensity\":0.7 },\n");
+            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
+            json.append("      \"skyColors\": {\"sunriseColor\":\"#D0E8FF\",\"sunsetColor\":\"#A0C8FF\",\"dayColor\":\"#C0E0FF\",\"nightColor\":\"#0A0010\",\"horizonColor\":\"#B0D0FF\"}\n");
             json.append("    },\n");
 
             // Uranus
             json.append("    {\n");
             json.append("      \"name\": \"Uranus\",\n");
-            json.append("      \"auroras\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"colors\": [\"#00FFFF\", \"#88FFFF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -70.0, \"maxLatitude\": -50.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 50.0, \"maxLatitude\": 70.0},\n");
-            json.append("        \"height\": 170.0,\n");
-            json.append("        \"thickness\": 35.0,\n");
-            json.append("        \"waveSpeed\": 0.06,\n");
-            json.append("        \"waveAmplitude\": 18.0,\n");
-            json.append("        \"horizontalFlowSpeed\": 0.025\n");
-            json.append("      },\n");
-            json.append("      \"solarStorms\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"minDuration\": 2.0,\n");
-            json.append("        \"maxDuration\": 8.0,\n");
-            json.append("        \"minInterval\": 40.0,\n");
-            json.append("        \"maxInterval\": 100.0,\n");
-            json.append("        \"intensity\": 0.6\n");
-            json.append("      }\n");
+            json.append("      \"auroras\": { \"enabled\": true, \"colors\": [\"#00FFFF\",\"#88FFFF\"], \"borealis\": {\"minLatitude\":-70.0,\"maxLatitude\":-50.0}, \"australis\": {\"minLatitude\":50.0,\"maxLatitude\":70.0}, \"height\":170.0,\"thickness\":35.0,\"waveSpeed\":0.06,\"waveAmplitude\":18.0,\"horizontalFlowSpeed\":0.025 },\n");
+            json.append("      \"solarStorms\": { \"enabled\": true, \"minDuration\":2.0,\"maxDuration\":8.0,\"minInterval\":40.0,\"maxInterval\":100.0,\"intensity\":0.6 },\n");
+            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
+            json.append("      \"skyColors\": {\"sunriseColor\":\"#A0FFFF\",\"sunsetColor\":\"#80FFFF\",\"dayColor\":\"#B0FFFF\",\"nightColor\":\"#001020\",\"horizonColor\":\"#90FFFF\"}\n");
             json.append("    },\n");
 
             // Neptune
             json.append("    {\n");
             json.append("      \"name\": \"Neptune\",\n");
-            json.append("      \"auroras\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"colors\": [\"#0044FF\", \"#0088FF\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -80.0, \"maxLatitude\": -65.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 65.0, \"maxLatitude\": 80.0},\n");
-            json.append("        \"height\": 160.0,\n");
-            json.append("        \"thickness\": 35.0,\n");
-            json.append("        \"waveSpeed\": 0.07,\n");
-            json.append("        \"waveAmplitude\": 20.0,\n");
-            json.append("        \"horizontalFlowSpeed\": 0.03\n");
-            json.append("      },\n");
-            json.append("      \"solarStorms\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"minDuration\": 2.0,\n");
-            json.append("        \"maxDuration\": 7.0,\n");
-            json.append("        \"minInterval\": 50.0,\n");
-            json.append("        \"maxInterval\": 120.0,\n");
-            json.append("        \"intensity\": 0.5\n");
-            json.append("      }\n");
+            json.append("      \"auroras\": { \"enabled\": true, \"colors\": [\"#0044FF\",\"#0088FF\"], \"borealis\": {\"minLatitude\":-80.0,\"maxLatitude\":-65.0}, \"australis\": {\"minLatitude\":65.0,\"maxLatitude\":80.0}, \"height\":160.0,\"thickness\":35.0,\"waveSpeed\":0.07,\"waveAmplitude\":20.0,\"horizontalFlowSpeed\":0.03 },\n");
+            json.append("      \"solarStorms\": { \"enabled\": true, \"minDuration\":2.0,\"maxDuration\":7.0,\"minInterval\":50.0,\"maxInterval\":120.0,\"intensity\":0.5 },\n");
+            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
+            json.append("      \"skyColors\": {\"sunriseColor\":\"#809FFF\",\"sunsetColor\":\"#4060FF\",\"dayColor\":\"#6090FF\",\"nightColor\":\"#000810\",\"horizonColor\":\"#5070FF\"}\n");
             json.append("    }\n");
-            json.append("  ],\n");
 
-            // Moons array
-            json.append("  \"moons\": [\n");
+            json.append("  ],\n  \"moons\": [\n");
+
+            // Titan
             json.append("    {\n");
             json.append("      \"name\": \"Titan\",\n");
-            json.append("      \"auroras\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"colors\": [\"#FF8800\", \"#FFAA00\"],\n");
-            json.append("        \"borealis\": {\"minLatitude\": -85.0, \"maxLatitude\": -70.0},\n");
-            json.append("        \"australis\": {\"minLatitude\": 70.0, \"maxLatitude\": 85.0},\n");
-            json.append("        \"height\": 100.0,\n");
-            json.append("        \"thickness\": 20.0,\n");
-            json.append("        \"waveSpeed\": 0.03,\n");
-            json.append("        \"waveAmplitude\": 10.0,\n");
-            json.append("        \"horizontalFlowSpeed\": 0.015\n");
-            json.append("      },\n");
-            json.append("      \"solarStorms\": {\n");
-            json.append("        \"enabled\": true,\n");
-            json.append("        \"minDuration\": 0.5,\n");
-            json.append("        \"maxDuration\": 3.0,\n");
-            json.append("        \"minInterval\": 15.0,\n");
-            json.append("        \"maxInterval\": 40.0,\n");
-            json.append("        \"intensity\": 0.4\n");
-            json.append("      }\n");
+            json.append("      \"auroras\": { \"enabled\": false, \"colors\": [], \"borealis\": {\"minLatitude\":0.0,\"maxLatitude\":0.0}, \"australis\": {\"minLatitude\":0.0,\"maxLatitude\":0.0}, \"height\":0.0,\"thickness\":0.0,\"waveSpeed\":0.0,\"waveAmplitude\":0.0,\"horizontalFlowSpeed\":0.0 },\n");
+            json.append("      \"solarStorms\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"intensity\":0.0},\n");
+            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0},\n");
+            json.append("      \"skyColors\": {\"sunriseColor\":\"#FFDDAA\",\"sunsetColor\":\"#FFCC88\",\"dayColor\":\"#FFE8AA\",\"nightColor\":\"#1A0F0F\",\"horizonColor\":\"#FFCC88\"}\n");
             json.append("    }\n");
+
             json.append("  ]\n");
             json.append("}\n");
 
             File configDir = new File("config/astrocraft-151-addon");
-            if (!configDir.exists()) {
-                configDir.mkdirs();
-            }
+            if (!configDir.exists()) configDir.mkdirs();
             File jsonFile = new File(configDir, "atmosphericevents.json");
             FileWriter writer = new FileWriter(jsonFile);
             writer.write(json.toString());

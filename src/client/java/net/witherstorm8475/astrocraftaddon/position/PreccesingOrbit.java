@@ -113,8 +113,30 @@ public class PreccesingOrbit {
                 json.append("    {\"name\": \"Neptune\", \"nodal\": 0, \"apsidal\": 0, \"minAxialTilt\": 28.32, \"maxAxialTilt\": 28.32, \"axialPrecessionPeriod\": 0, \"Day\": 0.67125},\n");
                 json.append("    {\"name\": \"Pluto\", \"nodal\": 20000, \"apsidal\": 19951, \"minAxialTilt\": 102, \"maxAxialTilt\": 126, \"axialPrecessionPeriod\": 3000000, \"Day\": 6.387}\n");
                 json.append("  ],\n");
+
                 json.append("  \"moons\": [\n");
-                json.append("    {\"name\": \"Moon\", \"minAxialTilt\": 1.54, \"maxAxialTilt\": 1.54, \"axialPrecessionPeriod\": 0, \"Day\": 1}\n");
+                json.append("    {\"name\": \"Moon\", \"minAxialTilt\": 1.54, \"maxAxialTilt\": 1.54, \"axialPrecessionPeriod\": 18.6, \"Day\": 29.530589},\n");
+                json.append("    {\"name\": \"Phobos\", \"minAxialTilt\": 1.1, \"maxAxialTilt\": 1.1, \"axialPrecessionPeriod\": 2.262, \"Day\": 0.31891},\n");
+                json.append("    {\"name\": \"Deimos\", \"minAxialTilt\": 1.8, \"maxAxialTilt\": 1.8, \"axialPrecessionPeriod\": 54.537, \"Day\": 1.262361},\n");
+                json.append("    {\"name\": \"Io\", \"minAxialTilt\": 0, \"maxAxialTilt\": 0, \"axialPrecessionPeriod\": 1.333, \"Day\": 1.769861},\n");
+                json.append("    {\"name\": \"Europa\", \"minAxialTilt\": 0.5, \"maxAxialTilt\": 0.5, \"axialPrecessionPeriod\": 30.202, \"Day\": 3.554095},\n");
+                json.append("    {\"name\": \"Ganymede\", \"minAxialTilt\": 0.2, \"maxAxialTilt\": 0.2, \"axialPrecessionPeriod\": 137.812, \"Day\": 7.166389},\n");
+                json.append("    {\"name\": \"Callisto\", \"minAxialTilt\": 0.3, \"maxAxialTilt\": 0.3, \"axialPrecessionPeriod\": 577.264, \"Day\": 16.753563},\n");
+                json.append("    {\"name\": \"Mimas\", \"minAxialTilt\": 0, \"maxAxialTilt\": 0, \"axialPrecessionPeriod\": 0, \"Day\": 0.94},\n");
+                json.append("    {\"name\": \"Enceladus\", \"minAxialTilt\": 0.02, \"maxAxialTilt\": 0.02, \"axialPrecessionPeriod\": 0, \"Day\": 1.37},\n");
+                json.append("    {\"name\": \"Tethys\", \"minAxialTilt\": 1.09, \"maxAxialTilt\": 1.09, \"axialPrecessionPeriod\": 0, \"Day\": 1.89},\n");
+                json.append("    {\"name\": \"Dione\", \"minAxialTilt\": 0.02, \"maxAxialTilt\": 0.02, \"axialPrecessionPeriod\": 0, \"Day\": 2.73},\n");
+                json.append("    {\"name\": \"Rhea\", \"minAxialTilt\": 0.35, \"maxAxialTilt\": 0.35, \"axialPrecessionPeriod\": 0, \"Day\": 4.52},\n");
+                json.append("    {\"name\": \"Titan\", \"minAxialTilt\": 0.33, \"maxAxialTilt\": 0.33, \"axialPrecessionPeriod\": 0, \"Day\": 15.95},\n");
+                json.append("    {\"name\": \"Hyperion\", \"minAxialTilt\": 0.43, \"maxAxialTilt\": 0.43, \"axialPrecessionPeriod\": 0, \"Day\": 21.28},\n");
+                json.append("    {\"name\": \"Iapetus\", \"minAxialTilt\": 15.47, \"maxAxialTilt\": 15.47, \"axialPrecessionPeriod\": 0, \"Day\": 79.32},\n");
+                json.append("    {\"name\": \"Ariel\", \"minAxialTilt\": 0.26, \"maxAxialTilt\": 0.26, \"axialPrecessionPeriod\": 0, \"Day\": 2.52},\n");
+                json.append("    {\"name\": \"Umbriel\", \"minAxialTilt\": 0.36, \"maxAxialTilt\": 0.36, \"axialPrecessionPeriod\": 0, \"Day\": 4.14},\n");
+                json.append("    {\"name\": \"Titania\", \"minAxialTilt\": 0.08, \"maxAxialTilt\": 0.08, \"axialPrecessionPeriod\": 0, \"Day\": 8.71},\n");
+                json.append("    {\"name\": \"Oberon\", \"minAxialTilt\": 0.1, \"maxAxialTilt\": 0.1, \"axialPrecessionPeriod\": 0, \"Day\": 13.46},\n");
+                json.append("    {\"name\": \"Miranda\", \"minAxialTilt\": 4.22, \"maxAxialTilt\": 4.22, \"axialPrecessionPeriod\": 0, \"Day\": 1.41},\n");
+                json.append("    {\"name\": \"Triton\", \"minAxialTilt\": 23, \"maxAxialTilt\": 23, \"axialPrecessionPeriod\": 0, \"Day\": 5.88},\n");
+                json.append("    {\"name\": \"Charon\", \"minAxialTilt\": 0, \"maxAxialTilt\": 0, \"axialPrecessionPeriod\": 0, \"Day\": 6.39}\n");
                 json.append("  ]\n");
                 json.append("}\n");
 
