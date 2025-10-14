@@ -225,7 +225,7 @@ public class AtmosphericEvents {
             json.append("{\n");
             json.append("  \"lightPollution\": {\n");
             json.append("    \"mode\": \"dynamic\",\n");
-            json.append("    \"intensity\": 0.5\n");
+            json.append("    \"intensity\": 1\n");
             json.append("  },\n");
 
             json.append("  \"planets\": [\n");

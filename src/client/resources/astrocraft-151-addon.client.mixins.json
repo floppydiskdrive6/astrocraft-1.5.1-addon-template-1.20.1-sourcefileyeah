@@ -8,8 +8,7 @@
     "SkyRendererMixin",
     "SkyAngleMixin",
     "ForestFireRendererMixin",
-    "SkyColorMixin",
-    "StarRendererMixin"
+    "SkyColorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

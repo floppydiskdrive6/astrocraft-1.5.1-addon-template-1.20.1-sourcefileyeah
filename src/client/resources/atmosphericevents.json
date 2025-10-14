@@ -1,7 +1,7 @@
 {
   "lightPollution": {
     "mode": "dynamic",
-    "intensity": 0.0
+    "intensity": 1
   },
   "planets": [
     {
