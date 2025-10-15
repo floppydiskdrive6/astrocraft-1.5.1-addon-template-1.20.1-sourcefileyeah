@@ -11,6 +11,7 @@ public class AstrocraftAddonClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+
         System.out.println("AstroCraft Addon: Initializing client...");
 
         // Load the precession config first

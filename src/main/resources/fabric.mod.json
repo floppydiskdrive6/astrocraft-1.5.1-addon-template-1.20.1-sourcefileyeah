@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
 	"id": "astrocraft-151-addon",
-	"version": "${version}",
-	"name": "AstroCraft-1.5.1-Addon",
-	"description": "This is an Addon for astrocraft-1.5.1-1.20.1, The file name is astrocraftaddon151 but the mod name is going to be Most Realistic Skies: Astrocraft addon",
+	"version": "v1.0.0-beta+1.20.1",
+	"name": "AstroCraft-1.5.1-Addon+1.20.1",
+	"description": "This is an Addon for astrocraft-1.5.1+1.20.1, The mods name is going to be Most Realistic Skies: Astrocraft addon",
 	"authors": [
 		"Clater/Witherstorm8475!"
 	],
@@ -13,7 +13,7 @@
 	},
 	"license": "MIT",
 	"icon": "assets/astrocraft-151-addon/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"main": [
 			"net.witherstorm8475.astrocraftaddon.AstroCraft151Addon"
