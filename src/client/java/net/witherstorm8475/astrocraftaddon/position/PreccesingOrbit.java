@@ -260,12 +260,12 @@ public class PreccesingOrbit {
                 return;
             }
 
-            System.out.println("[AstroCraft Addon] Applying precession to all celestial bodies...");
+            //System.out.println("[AstroCraft Addon] Applying precession to all celestial bodies...");
 
             // Start from root and recursively process all bodies
             applyPrecessionToBody(root);
 
-            System.out.println("[AstroCraft Addon] Precession application complete!");
+            //System.out.println("[AstroCraft Addon] Precession application complete!");
 
         } catch (Exception e) {
             System.err.println("Error applying precession:");
@@ -302,7 +302,7 @@ public class PreccesingOrbit {
                     try {
                         Method setPrecession = positioner.getClass().getMethod("astrocraftAddon$setPrecession", double.class, double.class);
                         setPrecession.invoke(positioner, precData.nodalPeriod, precData.apsidalPeriod);
-                        System.out.println("[AstroCraft Addon] Applied precession to " + bodyName + " (" + id + "): nodal=" + precData.nodalPeriod + ", apsidal=" + precData.apsidalPeriod);
+                        //System.out.println("[AstroCraft Addon] Applied precession to " + bodyName + " (" + id + "): nodal=" + precData.nodalPeriod + ", apsidal=" + precData.apsidalPeriod);
                     } catch (NoSuchMethodException e) {
                         System.out.println("[AstroCraft Addon] Warning: Could not find setPrecession method for " + bodyName);
                     }

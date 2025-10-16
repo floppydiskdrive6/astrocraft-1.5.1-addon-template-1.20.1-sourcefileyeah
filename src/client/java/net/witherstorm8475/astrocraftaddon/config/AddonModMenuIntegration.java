@@ -7,6 +7,6 @@ public class AddonModMenuIntegration implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> AstrocraftAddonConfigScreenFactory.create(parent);
+        return AstrocraftAddonConfigScreenFactory::getMainScreen;
     }
 }

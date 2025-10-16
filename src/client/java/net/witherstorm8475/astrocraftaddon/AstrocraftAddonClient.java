@@ -2,6 +2,7 @@ package net.witherstorm8475.astrocraftaddon;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.witherstorm8475.astrocraftaddon.config.AstrocraftAddonConfig;
 import net.witherstorm8475.astrocraftaddon.position.PreccesingOrbit;
 
 public class AstrocraftAddonClient implements ClientModInitializer {
@@ -19,6 +20,8 @@ public class AstrocraftAddonClient implements ClientModInitializer {
 
         // Initialize aurora renderer
         //AuroraRenderer.init();
+
+        AstrocraftAddonConfig.init();
 
         // Wait a few ticks for AstroCraft to initialize its planets
         ClientTickEvents.END_WORLD_TICK.register(world -> {
