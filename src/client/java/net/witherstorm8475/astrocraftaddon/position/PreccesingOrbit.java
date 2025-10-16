@@ -255,25 +255,17 @@ public class PreccesingOrbit {
             rootField.setAccessible(true);
             Object root = rootField.get(null);
 
-            //System.out.println("DEBUG: Got root: " + root);
-
             if (root == null) {
                 System.err.println("ERROR: PlanetManager.root is null - planets not loaded yet");
                 return;
             }
 
-            // Find and process ONLY the sun body
-            Method findChild = root.getClass().getMethod("findChild", String.class);
-            Object sun = findChild.invoke(root, "sun");
+            System.out.println("[AstroCraft Addon] Applying precession to all celestial bodies...");
 
-            if (sun != null) {
-                //System.out.println("DEBUG: Found sun, processing its children...");
-                applyPrecessionToBody(sun);
-            } else {
-                System.err.println("ERROR: Could not find sun body");
-            }
+            // Start from root and recursively process all bodies
+            applyPrecessionToBody(root);
 
-            //System.out.println("Precession application complete!");
+            System.out.println("[AstroCraft Addon] Precession application complete!");
 
         } catch (Exception e) {
             System.err.println("Error applying precession:");
@@ -297,44 +289,51 @@ public class PreccesingOrbit {
             }
         }
 
-        if (positionerField == null) {
-            return; // Skip if no positioner
-        }
+        if (positionerField != null) {
+            Object positioner = positionerField.get(body);
 
-        Object positioner = positionerField.get(body);
+            if (positioner != null && positioner.getClass().getSimpleName().equals("Orbit")) {
+                String[] parts = id.split("\\.");
+                String bodyName = parts[parts.length - 1];
 
-        if (positioner != null && positioner.getClass().getSimpleName().equals("Orbit")) {
-            String[] parts = id.split("\\.");
-            String planetName = parts[parts.length - 1];
+                PrecessionConfig.PrecessionData precData = PrecessionConfig.getPrecession(bodyName);
 
-            PrecessionConfig.PrecessionData precData = PrecessionConfig.getPrecession(planetName);
-
-            if (precData.nodalPeriod != 0 || precData.apsidalPeriod != 0) {
-                Method setPrecession = positioner.getClass().getMethod("astrocraftAddon$setPrecession", double.class, double.class);
-                setPrecession.invoke(positioner, precData.nodalPeriod, precData.apsidalPeriod);
-
-                //System.out.println("Applied precession to " + planetName + " (" + id + "): nodal=" + precData.nodalPeriod + ", apsidal=" + precData.apsidalPeriod);
+                if (precData.nodalPeriod != 0 || precData.apsidalPeriod != 0) {
+                    try {
+                        Method setPrecession = positioner.getClass().getMethod("astrocraftAddon$setPrecession", double.class, double.class);
+                        setPrecession.invoke(positioner, precData.nodalPeriod, precData.apsidalPeriod);
+                        System.out.println("[AstroCraft Addon] Applied precession to " + bodyName + " (" + id + "): nodal=" + precData.nodalPeriod + ", apsidal=" + precData.apsidalPeriod);
+                    } catch (NoSuchMethodException e) {
+                        System.out.println("[AstroCraft Addon] Warning: Could not find setPrecession method for " + bodyName);
+                    }
+                }
             }
         }
 
-        // Get children HashMap
-        HashMap children = null;
+        // Get children and recursively process them
+        HashMap<?, ?> children = null;
         searchClass = body.getClass();
+
         while (searchClass != null && children == null) {
             Field[] fields = searchClass.getDeclaredFields();
             for (Field field : fields) {
-                field.setAccessible(true);
                 if (field.getType().equals(HashMap.class)) {
-                    children = (HashMap) field.get(body);
-                    break;
+                    field.setAccessible(true);
+                    children = (HashMap<?, ?>) field.get(body);
+                    if (children != null) {
+                        break;
+                    }
                 }
             }
             searchClass = searchClass.getSuperclass();
         }
 
-        if (children != null) {
+        // Recursively apply precession to all children
+        if (children != null && !children.isEmpty()) {
             for (Object child : children.values()) {
-                applyPrecessionToBody(child);
+                if (child != null) {
+                    applyPrecessionToBody(child);
+                }
             }
         }
     }
