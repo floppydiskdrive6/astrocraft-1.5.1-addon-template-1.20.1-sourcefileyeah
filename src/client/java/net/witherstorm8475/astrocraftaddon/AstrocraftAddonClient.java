@@ -13,25 +13,19 @@ public class AstrocraftAddonClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        System.out.println("AstroCraft Addon: Initializing client...");
 
         // Load the precession config first
         PreccesingOrbit.PrecessionConfig.load();
 
-        // Initialize aurora renderer
-        //AuroraRenderer.init();
 
         AstrocraftAddonConfig.init();
 
         // Wait a few ticks for AstroCraft to initialize its planets
         ClientTickEvents.END_WORLD_TICK.register(world -> {
             try {
-                //System.out.println("Attempting to apply precession...");
                 PreccesingOrbit.applyPrecessionToPlanets();
                 precessionApplied = true;
-                //System.out.println("AstroCraft Addon: Precession system loaded successfully!");
             } catch (Exception e) {
-                System.err.println("AstroCraft Addon: Failed to apply precession:");
                 e.printStackTrace();
             }
         });

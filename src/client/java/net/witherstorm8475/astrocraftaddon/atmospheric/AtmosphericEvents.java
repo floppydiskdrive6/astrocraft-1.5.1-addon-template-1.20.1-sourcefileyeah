@@ -110,11 +110,9 @@ public class AtmosphericEvents {
                 try (InputStreamReader isr = new InputStreamReader(is);
                      BufferedReader br = new BufferedReader(isr)) {
                     root = JsonParser.parseReader(br).getAsJsonObject();
-                    System.out.println("[Astrocraft Addon] Loaded precession config from classpath /config/astrocraft-addon.json");
                 }
             }
-        } catch (Exception e) {
-            System.err.println("[Astrocraft Addon] Failed reading classpath config: " + e.getMessage());
+        } catch (Exception ignored) {
         }
 
         // 2) try filesystem candidate paths
@@ -126,17 +124,14 @@ public class AtmosphericEvents {
                          BufferedReader br = new BufferedReader(fr)) {
                         root = JsonParser.parseReader(br).getAsJsonObject();
                         usedFile = f;
-                        System.out.println("[Astrocraft Addon] Loaded atmospheric config from: " + f.getAbsolutePath());
                         break;
-                    } catch (Exception e) {
-                        System.err.println("[Astrocraft Addon] Failed to parse " + f.getAbsolutePath() + " -> " + e.getMessage());
+                    } catch (Exception ignored) {
                     }
                 }
             }
         }
 
         if (root == null) {
-            System.out.println("[Astrocraft Addon] No atmospheric config found; ATMOSPHERE_MAP stays empty.");
             return;
         }
 
@@ -155,13 +150,9 @@ public class AtmosphericEvents {
                 if (visual.has("moons") && visual.get("moons").isJsonArray()) {
                     parsePlanetsArray(visual.getAsJsonArray("moons"));
                 }
-            } else {
-                System.out.println("[Astrocraft Addon] 'visual' section missing or not an object.");
             }
 
-            System.out.println("[Astrocraft Addon] Loaded atmospheric events for " + ATMOSPHERE_MAP.size() + " celestial bodies: " + ATMOSPHERE_MAP.keySet());
         } catch (Exception e) {
-            System.err.println("[Astrocraft Addon] Exception while parsing atmospheric JSON:");
             e.printStackTrace();
         }
     }
@@ -237,7 +228,6 @@ public class AtmosphericEvents {
         SkyColorsConfig sccfg = new SkyColorsConfig(sunrise, sunset, day, night, horizon);
 
         ATMOSPHERE_MAP.put(key, new PlanetAtmosphere(fcfg, sccfg));
-        System.out.println("[Astrocraft Addon] Parsed atmosphere for '" + name + "': " + fcfg + " ; " + sccfg);
     }
 
     // ---------- Utilities ----------
@@ -302,10 +292,6 @@ public class AtmosphericEvents {
 
     public static void dump() {
         if (ATMOSPHERE_MAP == null) load();
-        System.out.println("[Astrocraft Addon] ATMOSPHERE_MAP dump: " + ATMOSPHERE_MAP.keySet());
-        for (Map.Entry<String, PlanetAtmosphere> e : ATMOSPHERE_MAP.entrySet()) {
-            System.out.println(" - " + e.getKey() + " => " + e.getValue());
-        }
     }
 
     public static void updateForestFires(String planetName, double currentTime, double playerX, double playerZ) {
@@ -333,8 +319,6 @@ public class AtmosphericEvents {
             state.centerZ = playerZ + (random.nextDouble() - 0.5) * 10000.0;
             state.intensity = 1.0;
 
-            System.out.println("[Astrocraft Addon] Forest fire started on " + planetName +
-                    " for " + duration + " days at " + state.centerX + ", " + state.centerZ);
         }
 
         if (state.active && currentTime >= state.endTime) {
@@ -342,7 +326,6 @@ public class AtmosphericEvents {
             double interval = atmosphere.forestFires.minInterval +
                     random.nextDouble() * (atmosphere.forestFires.maxInterval - atmosphere.forestFires.minInterval);
             state.nextFireTime = currentTime + interval;
-            System.out.println("[Astrocraft Addon] Forest fire ended on " + planetName + ". Next in " + interval + " days");
         }
     }
 

@@ -68,7 +68,6 @@ public class PreccesingOrbit {
             PRECESSION_MAP = new HashMap<>();
             File file = new File("config/astrocraft-addon.json");
             if (!file.exists()) {
-                System.err.println("[Astrocraft Addon] Precession config not found at: " + file.getAbsolutePath());
                 return;
             }
 
@@ -87,10 +86,7 @@ public class PreccesingOrbit {
                     }
                 }
 
-                System.out.println("[Astrocraft Addon] Loaded precession data for " + PRECESSION_MAP.size() + " bodies");
-
             } catch (Exception e) {
-                System.err.println("[Astrocraft Addon] Error loading precession.json:");
                 e.printStackTrace();
             }
         }
@@ -148,7 +144,6 @@ public class PreccesingOrbit {
             Object root = rootField.get(null);
 
             if (root == null) {
-                System.err.println("ERROR: PlanetManager.root is null - planets not loaded yet");
                 return;
             }
 
@@ -156,7 +151,6 @@ public class PreccesingOrbit {
             applyPrecessionToBody(root);
 
         } catch (Exception e) {
-            System.err.println("Error applying precession:");
             e.printStackTrace();
         }
     }
@@ -190,8 +184,7 @@ public class PreccesingOrbit {
                     try {
                         Method setPrecession = positioner.getClass().getMethod("astrocraftAddon$setPrecession", double.class, double.class);
                         setPrecession.invoke(positioner, precData.nodalPeriod, precData.apsidalPeriod);
-                    } catch (NoSuchMethodException e) {
-                        System.out.println("[AstroCraft Addon] Warning: Could not find setPrecession method for " + bodyName);
+                    } catch (NoSuchMethodException ignored) {
                     }
                 }
             }

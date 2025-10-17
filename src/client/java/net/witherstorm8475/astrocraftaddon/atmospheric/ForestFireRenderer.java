@@ -86,10 +86,7 @@ public class ForestFireRenderer {
             // Render full-screen tint overlay
             renderFullScreenTint(matrices, r, g, b, a);
 
-            //System.out.println("DEBUG Fire: Rendering sky tint - strength: " + tintStrength + " distance: " + distance);
-
         } catch (Exception e) {
-            System.err.println("DEBUG Fire: Exception!");
             e.printStackTrace();
         }
     }
