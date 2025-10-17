@@ -64,24 +64,19 @@ public class PreccesingOrbit {
             PRECESSION_MAP = new HashMap<>();
             try {
                 InputStream stream = null;
-                stream = PrecessionConfig.class.getResourceAsStream("/astrocraft-151-addon/precession.json");
+                stream = PrecessionConfig.class.getResourceAsStream("/astrocraft-151-addon/config/astrocraft-addon.json");
                 if (stream == null) {
-                    stream = PrecessionConfig.class.getResourceAsStream("astrocraft-151-addon/precession.json");
+                    stream = PrecessionConfig.class.getResourceAsStream("astrocraft-151-addon/config/astrocraft-addon.json");
                 }
                 if (stream == null) {
-                    stream = PrecessionConfig.class.getClassLoader().getResourceAsStream("astrocraft-151-addon/precession.json");
+                    stream = PrecessionConfig.class.getClassLoader().getResourceAsStream("astrocraft-151-addon/config/astrocraft-addon.json");
                 }
                 if (stream == null) {
-                    File configFile = new File("config/astrocraft-151-addon/precession.json");
+                    File configFile = new File("config/astrocraft-addon.json");
                     if (configFile.exists()) {
                         stream = new FileInputStream(configFile);
                         //System.out.println("Loading precession.json from config folder");
                     }
-                }
-                if (stream == null) {
-                    System.out.println("precession.json not found in any location, generating default...");
-                    generateDefaultPrecessionJson();
-                    return;
                 }
                 BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
                 StringBuilder jsonContent = new StringBuilder();
@@ -98,87 +93,61 @@ public class PreccesingOrbit {
             }
         }
 
-        private static void generateDefaultPrecessionJson() {
-            try {
-                StringBuilder json = new StringBuilder();
-                json.append("{\n");
-                json.append("  \"planets\": [\n");
-                json.append("    {\"name\": \"Mercury\", \"nodal\": 325513, \"apsidal\": 280000, \"minAxialTilt\": 0.01, \"maxAxialTilt\": 0.034, \"axialPrecessionPeriod\": 325000, \"Day\": 176},\n");
-                json.append("    {\"name\": \"Venus\", \"nodal\": 29000, \"apsidal\": 29000, \"minAxialTilt\": 2.64, \"maxAxialTilt\": 2.64, \"axialPrecessionPeriod\": 29000, \"Day\": -116.75},\n");
-                json.append("    {\"name\": \"Earth\", \"nodal\": 25772, \"apsidal\": 112000, \"minAxialTilt\": 22.1, \"maxAxialTilt\": 24.5, \"axialPrecessionPeriod\": 25772, \"Day\": 1},\n");
-                json.append("    {\"name\": \"Mars\", \"nodal\": 170000, \"apsidal\": 7300, \"minAxialTilt\": 22.04, \"maxAxialTilt\": 26.14, \"axialPrecessionPeriod\": 170000, \"Day\": 1.027},\n");
-                json.append("    {\"name\": \"Jupiter\", \"nodal\": 50687, \"apsidal\": 200000, \"minAxialTilt\": 3.13, \"maxAxialTilt\": 3.13, \"axialPrecessionPeriod\": 0, \"Day\": 0.41354},\n");
-                json.append("    {\"name\": \"Saturn\", \"nodal\": 50687, \"apsidal\": 1400000, \"minAxialTilt\": 26.73, \"maxAxialTilt\": 26.73, \"axialPrecessionPeriod\": 0, \"Day\": 0.44401},\n");
-                json.append("    {\"name\": \"Uranus\", \"nodal\": 0, \"apsidal\": 0, \"minAxialTilt\": 82.23, \"maxAxialTilt\": 82.23, \"axialPrecessionPeriod\": 0, \"Day\": -0.71833},\n");
-                json.append("    {\"name\": \"Neptune\", \"nodal\": 0, \"apsidal\": 0, \"minAxialTilt\": 28.32, \"maxAxialTilt\": 28.32, \"axialPrecessionPeriod\": 0, \"Day\": 0.67125},\n");
-                json.append("    {\"name\": \"Pluto\", \"nodal\": 20000, \"apsidal\": 19951, \"minAxialTilt\": 102, \"maxAxialTilt\": 126, \"axialPrecessionPeriod\": 3000000, \"Day\": 6.387}\n");
-                json.append("  ],\n");
-
-                json.append("  \"moons\": [\n");
-                json.append("    {\"name\": \"Moon\", \"minAxialTilt\": 1.54, \"maxAxialTilt\": 1.54, \"axialPrecessionPeriod\": 18.6, \"Day\": 29.530589},\n");
-                json.append("    {\"name\": \"Phobos\", \"minAxialTilt\": 1.1, \"maxAxialTilt\": 1.1, \"axialPrecessionPeriod\": 2.262, \"Day\": 0.31891},\n");
-                json.append("    {\"name\": \"Deimos\", \"minAxialTilt\": 1.8, \"maxAxialTilt\": 1.8, \"axialPrecessionPeriod\": 54.537, \"Day\": 1.262361},\n");
-                json.append("    {\"name\": \"Io\", \"minAxialTilt\": 0, \"maxAxialTilt\": 0, \"axialPrecessionPeriod\": 1.333, \"Day\": 1.769861},\n");
-                json.append("    {\"name\": \"Europa\", \"minAxialTilt\": 0.5, \"maxAxialTilt\": 0.5, \"axialPrecessionPeriod\": 30.202, \"Day\": 3.554095},\n");
-                json.append("    {\"name\": \"Ganymede\", \"minAxialTilt\": 0.2, \"maxAxialTilt\": 0.2, \"axialPrecessionPeriod\": 137.812, \"Day\": 7.166389},\n");
-                json.append("    {\"name\": \"Callisto\", \"minAxialTilt\": 0.3, \"maxAxialTilt\": 0.3, \"axialPrecessionPeriod\": 577.264, \"Day\": 16.753563},\n");
-                json.append("    {\"name\": \"Mimas\", \"minAxialTilt\": 0, \"maxAxialTilt\": 0, \"axialPrecessionPeriod\": 0, \"Day\": 0.94},\n");
-                json.append("    {\"name\": \"Enceladus\", \"minAxialTilt\": 0.02, \"maxAxialTilt\": 0.02, \"axialPrecessionPeriod\": 0, \"Day\": 1.37},\n");
-                json.append("    {\"name\": \"Tethys\", \"minAxialTilt\": 1.09, \"maxAxialTilt\": 1.09, \"axialPrecessionPeriod\": 0, \"Day\": 1.89},\n");
-                json.append("    {\"name\": \"Dione\", \"minAxialTilt\": 0.02, \"maxAxialTilt\": 0.02, \"axialPrecessionPeriod\": 0, \"Day\": 2.73},\n");
-                json.append("    {\"name\": \"Rhea\", \"minAxialTilt\": 0.35, \"maxAxialTilt\": 0.35, \"axialPrecessionPeriod\": 0, \"Day\": 4.52},\n");
-                json.append("    {\"name\": \"Titan\", \"minAxialTilt\": 0.33, \"maxAxialTilt\": 0.33, \"axialPrecessionPeriod\": 0, \"Day\": 15.95},\n");
-                json.append("    {\"name\": \"Hyperion\", \"minAxialTilt\": 0.43, \"maxAxialTilt\": 0.43, \"axialPrecessionPeriod\": 0, \"Day\": 21.28},\n");
-                json.append("    {\"name\": \"Iapetus\", \"minAxialTilt\": 15.47, \"maxAxialTilt\": 15.47, \"axialPrecessionPeriod\": 0, \"Day\": 79.32},\n");
-                json.append("    {\"name\": \"Ariel\", \"minAxialTilt\": 0.26, \"maxAxialTilt\": 0.26, \"axialPrecessionPeriod\": 0, \"Day\": 2.52},\n");
-                json.append("    {\"name\": \"Umbriel\", \"minAxialTilt\": 0.36, \"maxAxialTilt\": 0.36, \"axialPrecessionPeriod\": 0, \"Day\": 4.14},\n");
-                json.append("    {\"name\": \"Titania\", \"minAxialTilt\": 0.08, \"maxAxialTilt\": 0.08, \"axialPrecessionPeriod\": 0, \"Day\": 8.71},\n");
-                json.append("    {\"name\": \"Oberon\", \"minAxialTilt\": 0.1, \"maxAxialTilt\": 0.1, \"axialPrecessionPeriod\": 0, \"Day\": 13.46},\n");
-                json.append("    {\"name\": \"Miranda\", \"minAxialTilt\": 4.22, \"maxAxialTilt\": 4.22, \"axialPrecessionPeriod\": 0, \"Day\": 1.41},\n");
-                json.append("    {\"name\": \"Triton\", \"minAxialTilt\": 23, \"maxAxialTilt\": 23, \"axialPrecessionPeriod\": 0, \"Day\": 5.88},\n");
-                json.append("    {\"name\": \"Charon\", \"minAxialTilt\": 0, \"maxAxialTilt\": 0, \"axialPrecessionPeriod\": 0, \"Day\": 6.39}\n");
-                json.append("  ]\n");
-                json.append("}\n");
-
-                File configDir = new File("config/astrocraft-151-addon");
-                if (!configDir.exists()) {
-                    configDir.mkdirs();
-                }
-                File jsonFile = new File(configDir, "precession.json");
-                FileWriter writer = new FileWriter(jsonFile);
-                writer.write(json.toString());
-                writer.close();
-                System.out.println("Generated precession.json at: " + jsonFile.getAbsolutePath());
-            } catch (Exception e) {
-                System.err.println("Error generating precession.json:");
-                e.printStackTrace();
-            }
-        }
-
         private static void parseJson(String json) {
             json = json.trim();
 
-            // Parse planets array
-            int planetsStart = json.indexOf("\"planets\"");
+            // Find orbital section first
+            int orbitalStart = json.indexOf("\"orbital\"");
+            int orbitalEnd = findMatchingBrace(json, json.indexOf("{", orbitalStart));
+            String orbitalSection = json.substring(orbitalStart, orbitalEnd);
+
+            // Parse planets array within orbital
+            int planetsStart = orbitalSection.indexOf("\"planets\"");
             if (planetsStart != -1) {
-                planetsStart = json.indexOf("[", planetsStart);
-                int planetsEnd = json.indexOf("]", planetsStart);
+                planetsStart = orbitalSection.indexOf("[", planetsStart);
+                int planetsEnd = findMatchingBracket(orbitalSection, planetsStart);
                 if (planetsStart != -1 && planetsEnd != -1) {
-                    String planetsArray = json.substring(planetsStart + 1, planetsEnd);
+                    String planetsArray = orbitalSection.substring(planetsStart + 1, planetsEnd);
                     parseArray(planetsArray);
                 }
             }
 
-            // Parse moons array
-            int moonsStart = json.indexOf("\"moons\"");
+            // Parse moons array within orbital
+            int moonsStart = orbitalSection.indexOf("\"moons\"");
             if (moonsStart != -1) {
-                moonsStart = json.indexOf("[", moonsStart);
-                int moonsEnd = json.indexOf("]", moonsStart);
+                moonsStart = orbitalSection.indexOf("[", moonsStart);
+                int moonsEnd = findMatchingBracket(orbitalSection, moonsStart);
                 if (moonsStart != -1 && moonsEnd != -1) {
-                    String moonsArray = json.substring(moonsStart + 1, moonsEnd);
+                    String moonsArray = orbitalSection.substring(moonsStart + 1, moonsEnd);
                     parseArray(moonsArray);
                 }
             }
+        }
+
+        private static int findMatchingBrace(String json, int openIndex) {
+            if (openIndex == -1 || openIndex >= json.length()) return -1;
+            int depth = 0;
+            for (int i = openIndex; i < json.length(); i++) {
+                if (json.charAt(i) == '{') depth++;
+                else if (json.charAt(i) == '}') {
+                    depth--;
+                    if (depth == 0) return i;
+                }
+            }
+            return -1;
+        }
+
+        private static int findMatchingBracket(String json, int openIndex) {
+            if (openIndex == -1 || openIndex >= json.length()) return -1;
+            int depth = 0;
+            for (int i = openIndex; i < json.length(); i++) {
+                if (json.charAt(i) == '[') depth++;
+                else if (json.charAt(i) == ']') {
+                    depth--;
+                    if (depth == 0) return i;
+                }
+            }
+            return -1;
         }
 
         private static void parseArray(String arrayContent) {

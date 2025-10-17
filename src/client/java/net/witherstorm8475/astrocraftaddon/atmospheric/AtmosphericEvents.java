@@ -88,24 +88,12 @@ public class AtmosphericEvents {
 
         try {
             InputStream stream = null;
-            stream = AtmosphericEvents.class.getResourceAsStream("/astrocraft-151-addon/atmosphericevents.json");
+            stream = AtmosphericEvents.class.getResourceAsStream("/astrocraft-151-addon/astrocraft-addon.json");
             if (stream == null) {
-                stream = AtmosphericEvents.class.getResourceAsStream("astrocraft-151-addon/atmosphericevents.json");
+                stream = AtmosphericEvents.class.getResourceAsStream("astrocraft-151-addon/astrocraft-addon.json");
             }
             if (stream == null) {
-                stream = AtmosphericEvents.class.getClassLoader().getResourceAsStream("astrocraft-151-addon/atmosphericevents.json");
-            }
-            if (stream == null) {
-                File configFile = new File("config/astrocraft-151-addon/atmosphericevents.json");
-                if (configFile.exists()) {
-                    stream = new FileInputStream(configFile);
-                    System.out.println("Loading atmosphericevents.json from config folder");
-                }
-            }
-            if (stream == null) {
-                System.out.println("atmosphericevents.json not found, generating default...");
-                generateDefaultConfig();
-                return;
+                stream = AtmosphericEvents.class.getClassLoader().getResourceAsStream("config/astrocraft-addon.json");
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -118,87 +106,7 @@ public class AtmosphericEvents {
             parseJson(jsonContent.toString());
             System.out.println("Loaded atmospheric events for " + ATMOSPHERE_MAP.size() + " planets");
         } catch (Exception e) {
-            System.err.println("Error loading atmosphericevents.json:");
-            e.printStackTrace();
-        }
-    }
-
-    private static void generateDefaultConfig() {
-        try {
-            StringBuilder json = new StringBuilder();
-
-            json.append("  \"planets\": [\n");
-
-            // Venus
-            json.append("    {\n");
-            json.append("      \"name\": \"Venus\",\n");
-            json.append("      \"forestFires\": { \"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
-            json.append("      \"skyColors\": {\"sunriseColor\":\"#FFDAB9\",\"sunsetColor\":\"#FFCC99\",\"dayColor\":\"#FFE4B5\",\"nightColor\":\"#2F1E0F\",\"horizonColor\":\"#FFC87C\"}\n");
-            json.append("    },\n");
-
-            // Earth
-            json.append("    {\n");
-            json.append("      \"name\": \"Earth\",\n");
-            json.append("      \"forestFires\": { \"enabled\": true, \"minDuration\":2.0,\"maxDuration\":10.0,\"minInterval\":30.0,\"maxInterval\":120.0,\"skyTintStart\":\"#FFAA00\",\"skyTintEnd\":\"#FF4400\",\"maxTintStrength\":0.7,\"spreadRadius\":5000.0 },\n");
-            json.append("      \"skyColors\": {\"sunriseColor\":\"#FFA040\",\"sunsetColor\":\"#FF6020\",\"dayColor\":\"#87CEEB\",\"nightColor\":\"#000814\",\"horizonColor\":\"#FFB080\"}\n");
-            json.append("    },\n");
-
-            // Mars
-            json.append("    {\n");
-            json.append("      \"name\": \"Mars\",\n");
-            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0},\n");
-            json.append("      \"skyColors\": {\"sunriseColor\":\"#4080C0\",\"sunsetColor\":\"#2060A0\",\"dayColor\":\"#E8C9A6\",\"nightColor\":\"#1A1410\",\"horizonColor\":\"#C09060\"}\n");
-            json.append("    },\n");
-
-            // Jupiter
-            json.append("    {\n");
-            json.append("      \"name\": \"Jupiter\",\n");
-            json.append("      \"forestFires\": { \"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
-            json.append("      \"skyColors\": {\"sunriseColor\":\"#FFD8FF\",\"sunsetColor\":\"#FFA0FF\",\"dayColor\":\"#FFCCFF\",\"nightColor\":\"#1A001A\",\"horizonColor\":\"#FFB0FF\"}\n");
-            json.append("    },\n");
-
-            // Saturn
-            json.append("    {\n");
-            json.append("      \"name\": \"Saturn\",\n");
-            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
-            json.append("      \"skyColors\": {\"sunriseColor\":\"#D0E8FF\",\"sunsetColor\":\"#A0C8FF\",\"dayColor\":\"#C0E0FF\",\"nightColor\":\"#0A0010\",\"horizonColor\":\"#B0D0FF\"}\n");
-            json.append("    },\n");
-
-            // Uranus
-            json.append("    {\n");
-            json.append("      \"name\": \"Uranus\",\n");
-            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
-            json.append("      \"skyColors\": {\"sunriseColor\":\"#A0FFFF\",\"sunsetColor\":\"#80FFFF\",\"dayColor\":\"#B0FFFF\",\"nightColor\":\"#001020\",\"horizonColor\":\"#90FFFF\"}\n");
-            json.append("    },\n");
-
-            // Neptune
-            json.append("    {\n");
-            json.append("      \"name\": \"Neptune\",\n");
-            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0 },\n");
-            json.append("      \"skyColors\": {\"sunriseColor\":\"#809FFF\",\"sunsetColor\":\"#4060FF\",\"dayColor\":\"#6090FF\",\"nightColor\":\"#000810\",\"horizonColor\":\"#5070FF\"}\n");
-            json.append("    }\n");
-
-            json.append("  ],\n");
-
-            json.append("  \"moons\": [\n");
-            json.append("    {\n");
-            json.append("      \"name\": \"Titan\",\n");
-            json.append("      \"forestFires\": {\"enabled\": false,\"minDuration\":0.0,\"maxDuration\":0.0,\"minInterval\":0.0,\"maxInterval\":0.0,\"skyTintStart\":\"#000000\",\"skyTintEnd\":\"#000000\",\"maxTintStrength\":0.0,\"spreadRadius\":0.0},\n");
-            json.append("      \"skyColors\": {\"sunriseColor\":\"#FFDDAA\",\"sunsetColor\":\"#FFCC88\",\"dayColor\":\"#FFE8AA\",\"nightColor\":\"#1A0F0F\",\"horizonColor\":\"#FFCC88\"}\n");
-            json.append("    }\n");
-            json.append("  ]\n");
-            json.append("}\n");
-
-            File configDir = new File("config/astrocraft-151-addon");
-            if (!configDir.exists()) configDir.mkdirs();
-            File jsonFile = new File(configDir, "atmosphericevents.json");
-            FileWriter writer = new FileWriter(jsonFile);
-            writer.write(json.toString());
-            writer.close();
-
-            System.out.println("Generated atmosphericevents.json at: " + jsonFile.getAbsolutePath());
-        } catch (Exception e) {
-            System.err.println("Error generating atmosphericevents.json:");
+            System.err.println("Error loading astrocraft-addon.json:");
             e.printStackTrace();
         }
     }
@@ -206,24 +114,29 @@ public class AtmosphericEvents {
     private static void parseJson(String json) {
         json = json.trim();
 
-        // Parse planets array
-        int planetsStart = json.indexOf("\"planets\"");
+        int visualStart = json.indexOf("\"visual\"");
+        int visualEnd = findMatchingBrace(json, json.indexOf("{", visualStart));
+
+        String visualSection = json.substring(visualStart, visualEnd);
+
+        // Parse planets array - search within visualSection
+        int planetsStart = visualSection.indexOf("\"planets\"");
         if (planetsStart != -1) {
-            planetsStart = json.indexOf("[", planetsStart);
-            int planetsEnd = findMatchingBracket(json, planetsStart);
+            planetsStart = visualSection.indexOf("[", planetsStart);  // Search in visualSection, not json
+            int planetsEnd = findMatchingBracket(visualSection, planetsStart);  // Use visualSection
             if (planetsStart != -1 && planetsEnd != -1) {
-                String planetsArray = json.substring(planetsStart + 1, planetsEnd);
+                String planetsArray = visualSection.substring(planetsStart + 1, planetsEnd);
                 parsePlanetsArray(planetsArray);
             }
         }
 
-        // Parse moons array
-        int moonsStart = json.indexOf("\"moons\"");
+        // Parse moons array - search within visualSection
+        int moonsStart = visualSection.indexOf("\"moons\"");
         if (moonsStart != -1) {
-            moonsStart = json.indexOf("[", moonsStart);
-            int moonsEnd = findMatchingBracket(json, moonsStart);
+            moonsStart = visualSection.indexOf("[", moonsStart);  // Search in visualSection, not json
+            int moonsEnd = findMatchingBracket(visualSection, moonsStart);  // Use visualSection
             if (moonsStart != -1 && moonsEnd != -1) {
-                String moonsArray = json.substring(moonsStart + 1, moonsEnd);
+                String moonsArray = visualSection.substring(moonsStart + 1, moonsEnd);
                 parsePlanetsArray(moonsArray);
             }
         }
