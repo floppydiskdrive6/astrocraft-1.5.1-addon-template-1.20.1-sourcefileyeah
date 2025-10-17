@@ -1,5 +1,6 @@
 package net.witherstorm8475.astrocraftaddon.position;
 
+import com.google.gson.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.HashMap;
@@ -57,142 +58,63 @@ public class PreccesingOrbit {
         }
     }
 
+    // ---------------------------
+    // Robust PrecessionConfig
+    // ---------------------------
     public static class PrecessionConfig {
         private static Map<String, PrecessionData> PRECESSION_MAP = null;
 
         public static void load() {
             PRECESSION_MAP = new HashMap<>();
-            try {
-                InputStream stream = null;
-                stream = PrecessionConfig.class.getResourceAsStream("/astrocraft-151-addon/config/astrocraft-addon.json");
-                if (stream == null) {
-                    stream = PrecessionConfig.class.getResourceAsStream("astrocraft-151-addon/config/astrocraft-addon.json");
-                }
-                if (stream == null) {
-                    stream = PrecessionConfig.class.getClassLoader().getResourceAsStream("astrocraft-151-addon/config/astrocraft-addon.json");
-                }
-                if (stream == null) {
-                    File configFile = new File("config/astrocraft-addon.json");
-                    if (configFile.exists()) {
-                        stream = new FileInputStream(configFile);
-                        //System.out.println("Loading precession.json from config folder");
+            File file = new File("config/astrocraft-addon.json");
+            if (!file.exists()) {
+                System.err.println("[Astrocraft Addon] Precession config not found at: " + file.getAbsolutePath());
+                return;
+            }
+
+            try (FileReader reader = new FileReader(file)) {
+                com.google.gson.JsonObject root = com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();
+
+                // ✅ FIX: get the orbital section
+                if (root.has("orbital")) {
+                    com.google.gson.JsonObject orbital = root.getAsJsonObject("orbital");
+
+                    if (orbital.has("planets")) {
+                        parseArray(orbital.getAsJsonArray("planets"));
+                    }
+                    if (orbital.has("moons")) {
+                        parseArray(orbital.getAsJsonArray("moons"));
                     }
                 }
-                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-                StringBuilder jsonContent = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    jsonContent.append(line);
-                }
-                reader.close();
-                parseJson(jsonContent.toString());
-                //System.out.println("Loaded precession data for " + PRECESSION_MAP.size() + " planets");
+
+                System.out.println("[Astrocraft Addon] Loaded precession data for " + PRECESSION_MAP.size() + " bodies");
+
             } catch (Exception e) {
-                System.err.println("Error loading precession.json:");
+                System.err.println("[Astrocraft Addon] Error loading precession.json:");
                 e.printStackTrace();
             }
         }
 
-        private static void parseJson(String json) {
-            json = json.trim();
+        private static void parseArray(com.google.gson.JsonArray array) {
+            for (com.google.gson.JsonElement element : array) {
+                com.google.gson.JsonObject obj = element.getAsJsonObject();
+                String name = obj.get("name").getAsString();
 
-            // Find orbital section first
-            int orbitalStart = json.indexOf("\"orbital\"");
-            int orbitalEnd = findMatchingBrace(json, json.indexOf("{", orbitalStart));
-            String orbitalSection = json.substring(orbitalStart, orbitalEnd);
+                double nodal = obj.has("nodalPrecession") ? obj.get("nodalPrecession").getAsDouble() : 0;
+                double apsidal = obj.has("apsidalPrecession") ? obj.get("apsidalPrecession").getAsDouble() : 0;
+                double minAxialTilt = obj.has("minAxialTilt") ? obj.get("minAxialTilt").getAsDouble() : 0;
+                double maxAxialTilt = obj.has("maxAxialTilt") ? obj.get("maxAxialTilt").getAsDouble() : 0;
+                double axialPrecessionPeriod = obj.has("axialPrecessionPeriod") ? obj.get("axialPrecessionPeriod").getAsDouble() : 0;
+                double day = obj.has("dayLength") ? obj.get("dayLength").getAsDouble() : 0;
 
-            // Parse planets array within orbital
-            int planetsStart = orbitalSection.indexOf("\"planets\"");
-            if (planetsStart != -1) {
-                planetsStart = orbitalSection.indexOf("[", planetsStart);
-                int planetsEnd = findMatchingBracket(orbitalSection, planetsStart);
-                if (planetsStart != -1 && planetsEnd != -1) {
-                    String planetsArray = orbitalSection.substring(planetsStart + 1, planetsEnd);
-                    parseArray(planetsArray);
-                }
-            }
-
-            // Parse moons array within orbital
-            int moonsStart = orbitalSection.indexOf("\"moons\"");
-            if (moonsStart != -1) {
-                moonsStart = orbitalSection.indexOf("[", moonsStart);
-                int moonsEnd = findMatchingBracket(orbitalSection, moonsStart);
-                if (moonsStart != -1 && moonsEnd != -1) {
-                    String moonsArray = orbitalSection.substring(moonsStart + 1, moonsEnd);
-                    parseArray(moonsArray);
-                }
-            }
-        }
-
-        private static int findMatchingBrace(String json, int openIndex) {
-            if (openIndex == -1 || openIndex >= json.length()) return -1;
-            int depth = 0;
-            for (int i = openIndex; i < json.length(); i++) {
-                if (json.charAt(i) == '{') depth++;
-                else if (json.charAt(i) == '}') {
-                    depth--;
-                    if (depth == 0) return i;
-                }
-            }
-            return -1;
-        }
-
-        private static int findMatchingBracket(String json, int openIndex) {
-            if (openIndex == -1 || openIndex >= json.length()) return -1;
-            int depth = 0;
-            for (int i = openIndex; i < json.length(); i++) {
-                if (json.charAt(i) == '[') depth++;
-                else if (json.charAt(i) == ']') {
-                    depth--;
-                    if (depth == 0) return i;
-                }
-            }
-            return -1;
-        }
-
-        private static void parseArray(String arrayContent) {
-            String[] objects = arrayContent.split("\\},\\s*\\{");
-            for (String obj : objects) {
-                obj = obj.replace("{", "").replace("}", "").trim();
-                String name = null;
-                double nodal = 0;
-                double apsidal = 0;
-                double axialPrecessionPeriod = 0;
-                double minAxialTilt = 0;
-                double maxAxialTilt = 0;
-                double Day = 0;
-                String[] pairs = obj.split(",");
-                for (String pair : pairs) {
-                    String[] kv = pair.split(":");
-                    if (kv.length != 2) continue;
-                    String key = kv[0].trim().replace("\"", "");
-                    String value = kv[1].trim().replace("\"", "");
-                    if (key.equals("name")) {
-                        name = value;
-                    } else if (key.equals("nodal")) {
-                        nodal = Double.parseDouble(value);
-                    } else if (key.equals("apsidal")) {
-                        apsidal = Double.parseDouble(value);
-                    } else if (key.equals("axialPrecessionPeriod")) {
-                        axialPrecessionPeriod = Double.parseDouble(value);
-                    } else if (key.equals("minAxialTilt")) {
-                        minAxialTilt = Double.parseDouble(value);
-                    } else if (key.equals("maxAxialTilt")) {
-                        maxAxialTilt = Double.parseDouble(value);
-                    } else if (key.equals("Day")) {
-                        Day = Double.parseDouble(value);
-                    }
-                }
-                if (name != null) {
-                    PRECESSION_MAP.put(name.toLowerCase(), new PrecessionData(nodal, apsidal, minAxialTilt, maxAxialTilt, axialPrecessionPeriod, Day));
-                }
+                PRECESSION_MAP.put(name.toLowerCase(),
+                        new PrecessionData(nodal, apsidal, minAxialTilt, maxAxialTilt, axialPrecessionPeriod, day)
+                );
             }
         }
 
         public static PrecessionData getPrecession(String planetName) {
-            if (PRECESSION_MAP == null) {
-                load();
-            }
+            if (PRECESSION_MAP == null) load();
             return PRECESSION_MAP.getOrDefault(planetName.toLowerCase(), new PrecessionData(0, 0, 0, 0, 0, 0));
         }
 
@@ -204,7 +126,8 @@ public class PreccesingOrbit {
             public final double axialPrecessionPeriod;
             public final double Day;
 
-            public PrecessionData(double nodal, double apsidal, double minAxialTilt, double maxAxialTilt, double axialPrecessionPeriod, double Day) {
+            public PrecessionData(double nodal, double apsidal, double minAxialTilt, double maxAxialTilt,
+                                  double axialPrecessionPeriod, double Day) {
                 this.nodalPeriod = nodal;
                 this.apsidalPeriod = apsidal;
                 this.minAxialTilt = minAxialTilt;
@@ -229,12 +152,8 @@ public class PreccesingOrbit {
                 return;
             }
 
-            //System.out.println("[AstroCraft Addon] Applying precession to all celestial bodies...");
-
             // Start from root and recursively process all bodies
             applyPrecessionToBody(root);
-
-            //System.out.println("[AstroCraft Addon] Precession application complete!");
 
         } catch (Exception e) {
             System.err.println("Error applying precession:");
@@ -271,7 +190,6 @@ public class PreccesingOrbit {
                     try {
                         Method setPrecession = positioner.getClass().getMethod("astrocraftAddon$setPrecession", double.class, double.class);
                         setPrecession.invoke(positioner, precData.nodalPeriod, precData.apsidalPeriod);
-                        //System.out.println("[AstroCraft Addon] Applied precession to " + bodyName + " (" + id + "): nodal=" + precData.nodalPeriod + ", apsidal=" + precData.apsidalPeriod);
                     } catch (NoSuchMethodException e) {
                         System.out.println("[AstroCraft Addon] Warning: Could not find setPrecession method for " + bodyName);
                     }
