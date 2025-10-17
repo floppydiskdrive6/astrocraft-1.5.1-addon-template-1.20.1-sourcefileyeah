@@ -1,8 +1,4 @@
 {
-  "lightPollution": {
-    "mode": "dynamic",
-    "intensity": 1
-  },
   "planets": [
     {
       "name": "Venus",
