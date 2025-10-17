@@ -12,24 +12,7 @@ public class AtmosphericEvents {
     private static Map<String, PlanetAtmosphere> ATMOSPHERE_MAP = null;
     private static Map<String, SolarStormState> STORM_STATES = new HashMap<>();
     private static Map<String, ForestFireState> FIRE_STATES = new HashMap<>();
-    private static LightPollutionConfig GLOBAL_LIGHT_POLLUTION = null;
     private static Random random = new Random();
-
-    public static class LightPollutionConfig {
-        public final LightPollutionSystem.Mode mode;
-        public final float intensity;
-
-        public LightPollutionConfig(String modeStr, float intensity) {
-            LightPollutionSystem.Mode parsedMode;
-            try {
-                parsedMode = LightPollutionSystem.Mode.valueOf(modeStr.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                parsedMode = LightPollutionSystem.Mode.OFF;
-            }
-            this.mode = parsedMode;
-            this.intensity = Math.max(0.0f, Math.min(1.0f, intensity));
-        }
-    }
 
     public static class PlanetAtmosphere {
         public final AuroraConfig auroras;
@@ -176,7 +159,6 @@ public class AtmosphericEvents {
 
     public static void load() {
         ATMOSPHERE_MAP = new HashMap<>();
-        GLOBAL_LIGHT_POLLUTION = null;
 
         try {
             InputStream stream = null;
@@ -209,9 +191,6 @@ public class AtmosphericEvents {
             reader.close();
             parseJson(jsonContent.toString());
             System.out.println("Loaded atmospheric events for " + ATMOSPHERE_MAP.size() + " planets");
-            if (GLOBAL_LIGHT_POLLUTION != null) {
-                System.out.println("Light pollution mode: " + GLOBAL_LIGHT_POLLUTION.mode + " (intensity: " + GLOBAL_LIGHT_POLLUTION.intensity + ")");
-            }
         } catch (Exception e) {
             System.err.println("Error loading atmosphericevents.json:");
             e.printStackTrace();
@@ -333,7 +312,6 @@ public class AtmosphericEvents {
                 String mode = extractValue(lpObject, "mode");
                 if (mode == null) mode = "OFF";
                 float intensity = (float) parseDouble(lpObject, "intensity", 0.5);
-                GLOBAL_LIGHT_POLLUTION = new LightPollutionConfig(mode, intensity);
             }
         }
 
@@ -552,13 +530,6 @@ public class AtmosphericEvents {
             load();
         }
         return ATMOSPHERE_MAP.get(planetName.toLowerCase());
-    }
-
-    public static LightPollutionConfig getLightPollution() {
-        if (GLOBAL_LIGHT_POLLUTION == null) {
-            load();
-        }
-        return GLOBAL_LIGHT_POLLUTION;
     }
 
     public static void updateSolarStorms(String planetName, double currentTime) {
