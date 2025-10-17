@@ -12,11 +12,11 @@ import java.util.List;
 @Config(name = "astrocraft-addon")
 public class ConfigManager implements ConfigData {
 
-    @Category("visual")
+    @Category("Visual")
     @CollapsibleObject
     public VisualSettings visual = new VisualSettings();
 
-    @Category("orbital")
+    @Category("Orbital")
     @CollapsibleObject
     public OrbitalSettings orbital = new OrbitalSettings();
 
