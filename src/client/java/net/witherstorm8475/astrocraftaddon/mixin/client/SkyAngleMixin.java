@@ -42,31 +42,41 @@ public class SkyAngleMixin {
             PreccesingOrbit.PrecessionConfig.PrecessionData precData =
                     PreccesingOrbit.PrecessionConfig.getPrecession(bodyName);
 
-            // Determine rotation period
+            // Determine rotation period (in Earth days)
             double rotationPeriod = precData.Day;
 
             // If rotation period is 0, freeze the sky
             if (rotationPeriod == 0.0) {
-                double skyAngle = PlanetManager.getTropicalAngle();
+                double tropicalAngle = PlanetManager.getTropicalAngle();
                 double longitude = SkyRenderer.getLongitude();
-                cir.setReturnValue(skyAngle + longitude);
+                cir.setReturnValue(tropicalAngle + longitude);
                 return;
             }
 
-            // Calculate sky angle with custom rotation period
-            double worldAngle = (double)(Astrocraft.getWorldTime() - 6000L) / 24000.0;
-            double liveAngle = (double)System.currentTimeMillis() / 8.64E7 - 0.5;
+            // Get the tropical angle (where sun should be at solar noon)
+            double tropicalAngle = PlanetManager.getTropicalAngle();
 
-            // Get fractional part
-            double timeAngle = options.liveMode ? liveAngle : worldAngle;
-            timeAngle = timeAngle - Math.floor(timeAngle);
+            // Calculate world time
+            double worldTime = Astrocraft.getWorldTime();
 
-            // Apply rotation period scaling
-            // Faster rotation = smaller period = more rotations per day
-            timeAngle = timeAngle / rotationPeriod;
-            timeAngle = timeAngle - Math.floor(timeAngle); // Keep fractional part
+            // Calculate ticks per full rotation
+            double minecraftDayTicks = 24000.0;
+            double ticksPerRotation = minecraftDayTicks * rotationPeriod;
 
-            double skyAngle = 360.0 * timeAngle + PlanetManager.getTropicalAngle();
+            // Find where we are in the current rotation cycle (0 to ticksPerRotation)
+            double timeInCurrentRotation = worldTime % ticksPerRotation;
+
+            // Custom noon is at 1/4 of the rotation (like Minecraft's default worldTime 6000)
+            double customNoonTime = ticksPerRotation / 4.0;
+
+            // Calculate time offset from custom noon
+            double timeFromCustomNoon = timeInCurrentRotation - customNoonTime;
+
+            // Calculate rotation angle from custom noon
+            double rotationFromNoon = (timeFromCustomNoon / ticksPerRotation) * 360.0;
+
+            // Sky angle = tropical angle at noon + rotation since noon
+            double skyAngle = tropicalAngle + rotationFromNoon;
 
             // Handle spyglass lock
             try {
@@ -96,6 +106,7 @@ public class SkyAngleMixin {
             cir.setReturnValue(skyAngle + longitude);
 
         } catch (Exception e) {
+            e.printStackTrace();
             // If anything fails, let original method handle it
         }
     }

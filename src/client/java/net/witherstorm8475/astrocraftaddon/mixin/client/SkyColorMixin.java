@@ -1,7 +1,9 @@
 package net.witherstorm8475.astrocraftaddon.mixin.client;
 
 import mod.lwhrvw.astrocraft.Astrocraft;
+import mod.lwhrvw.astrocraft.SkyRenderer;
 import mod.lwhrvw.astrocraft.planets.Body;
+import mod.lwhrvw.astrocraft.planets.PlanetManager;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;
 import net.witherstorm8475.astrocraftaddon.atmospheric.AtmosphericEvents;
@@ -52,6 +54,12 @@ public class SkyColorMixin {
 
             double timeOfDay = ticksInPlanetDay / ticksPerPlanetDay; // 0..1 (0 = midnight)
 
+            // --- Apply longitude offset ---
+            double longitude = SkyRenderer.getLongitude(); // −180 to 180
+            double longitudeOffset = longitude / 360.0; // convert to fraction of day
+            timeOfDay = (timeOfDay + longitudeOffset) % 1.0;
+            if (timeOfDay < 0) timeOfDay += 1.0;
+
             Vec3d skyColor = calculateBaseSkyColor(atmosphere.skyColors, timeOfDay);
             cir.setReturnValue(skyColor);
 
@@ -66,28 +74,22 @@ public class SkyColorMixin {
         Vec3d sunrise = colorToVec(colors.sunriseColor);
         Vec3d sunset = colorToVec(colors.sunsetColor);
 
-        // Sunrise ramp: 0.96 -> 0.04
+        // Smooth sunrise/sunset transitions
         if (timeOfDay >= 0.96 || timeOfDay <= 0.00) {
             double t = (timeOfDay >= 0.96) ? (timeOfDay - 0.96) / 0.04 : (timeOfDay + 0.04) / 0.04;
             return lerp(night, sunrise, clamp01(t));
-        }
-        // Day: 0.04 -> 0.55
-        else if (timeOfDay > 0.00 && timeOfDay <= 0.49) {
-            // Early day ramp (sunrise -> day)
+        } else if (timeOfDay <= 0.49) {
             if (timeOfDay <= 0.08) {
                 double t = (timeOfDay - 0.04) / 0.04;
                 return lerp(sunrise, day, clamp01(t));
             }
-            // Sunset ramp (late afternoon)
             if (timeOfDay > 0.45) {
                 double t = (timeOfDay - 0.45) / 0.035;
                 return lerp(day, sunset, clamp01(t));
             }
             return day;
-        }
-        // Night: 0.55 -> 0.96
-        else {
-            double t = (timeOfDay - 0.49) / 0.05; // dusk ramp
+        } else {
+            double t = (timeOfDay - 0.49) / 0.05;
             return lerp(sunset, night, clamp01(t));
         }
     }
